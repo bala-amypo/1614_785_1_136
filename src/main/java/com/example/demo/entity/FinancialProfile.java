@@ -10,8 +10,13 @@ import jakarta.persistence.*;
 public class FinanciaProfile{
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
+    
     private Long id;
+    @OneToOne
+    @JoinColumn(name="user_id",nullable=false)
     private String user;
+    @Positive(message="Monthly income ")
+
     private Double monthlyIncome;
     private Double monthlyExpenses;
     private Double existingLoanEmi;
