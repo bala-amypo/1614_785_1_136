@@ -14,26 +14,26 @@ import com.example.demo.service.UserService;
 import jakarta.validation.Valid;
 
 @RestController
-public class AuthController{
+public class EligibilityController{
     @Autowired  UserService ser;
     @PostMapping("/register")
     public User sendData(@RequestBody User stu){
-        return ser.postData1(stu);
+        return ser.postData2(stu);
     }
     @GetMapping("/get")
     public List<User> getval(){
-        return ser.getAllData1();
+        return ser.getAllData2();
     }
     @DeleteMapping("/delete/{id}")
     public String del(@PathVariable Long id){
-        return ser.DeleteData1(id);
+        return ser.DeleteData2(id);
     }
     @GetMapping("/find/{id}")
     public User find(@PathVariable Long id){
-        return ser.getData1(id);
+        return ser.getData2(id);
     }
     @PutMapping("/put/{id}")
     public User putval(@PathVariable Long id,@RequestBody User entity){
-        return ser.updateData1(id,entity);
+        return ser.updateData2(id,entity);
     }
 }

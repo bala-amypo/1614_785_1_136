@@ -5,7 +5,7 @@ import com.example.demo.entity.EligibilityResult;
 
 public interface LoanEligibilityService{
     EligibilityResult postData2(EligibilityResult use);
-    List<EligibilityResult>getAllData1();
+    List<EligibilityResult>getAllData2();
     String  DeleteData2(Long id);
     EligibilityResult getData2(Long id);         
     EligibilityResult updateData2(Long id,EligibilityResult entity);                                                        
