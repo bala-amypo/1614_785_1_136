@@ -6,10 +6,10 @@ import com.example.demo.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class FinancialProfileServiceImpl implements StudentService{
     @Autowired StudentRepository student;
     @Override 
-    public User postData(Userstu){
+    public StudentEntity postData(StudentEntity stu){
         return student.save(stu);
     }
 }
