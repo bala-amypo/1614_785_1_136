@@ -1,4 +1,4 @@
 public interface FinancialProfileService{
     FinancialProfile createOrUpdateProfile(FinancialProfile profile);
-    Fi
+    FinancialProfile getProfileByUser(Long userId);
 }
