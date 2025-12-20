@@ -15,13 +15,13 @@ import jakarta.validation.Valid;
 
 @RestController
 public class EligibilityController{
-    @Autowired  UserService ser;
+    @Autowired  LoanEligibilityService ser;
     @PostMapping("/register")
-    public User sendData(@RequestBody User stu){
+    public EligibilityResult sendData(@RequestBody EligibilityResult stu){
         return ser.postData2(stu);
     }
     @GetMapping("/get")
-    public List<User> getval(){
+    public List<EligibilityResult> getval(){
         return ser.getAllData2();
     }
     @DeleteMapping("/delete/{id}")
@@ -29,11 +29,11 @@ public class EligibilityController{
         return ser.DeleteData2(id);
     }
     @GetMapping("/find/{id}")
-    public User find(@PathVariable Long id){
+    public EligibilityResult find(@PathVariable Long id){
         return ser.getData2(id);
     }
     @PutMapping("/put/{id}")
-    public User putval(@PathVariable Long id,@RequestBody User entity){
+    public EligibilityResult putval(@PathVariable Long id,@RequestBody EligibilityResult entity){
         return ser.updateData2(id,entity);
     }
 }
