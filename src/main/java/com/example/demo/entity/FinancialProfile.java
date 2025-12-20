@@ -22,7 +22,7 @@ public class FinanciaProfile{
 
 
     @Min(value=300,message="Credit score must be >=300")
-    @Max(value=900,message="Credit score must be")
+    @Max(value=900,message="Credit score must be <=900")
     private Double existingLoanEmi;
     private Integer creditScore;
     private Double savingBalance;
