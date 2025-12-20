@@ -9,7 +9,7 @@ package com.example.demo.entity;
 @AllArgsConstructor
 public class FinanciaProfile{
     @Id
-    @GeneratedValue(strategy)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
     private String user;
     private Double monthlyIncome;
