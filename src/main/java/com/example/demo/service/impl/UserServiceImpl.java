@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserServiceImpl implements UserService{
-    @Autowired StudentRepository student;
+    @Autowired UserRepository student;
     @Override 
     public User postData(Userstu){
         return student.save(stu);
