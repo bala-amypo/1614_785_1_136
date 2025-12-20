@@ -13,24 +13,24 @@ public class LoanEligibilityServiceImpl implements LoanEligibilityService{
 
     @Autowired EligibilityResultRepository used;
     @Override
-    public EligibilityResult postData1(EligibilityResult use){
+    public EligibilityResult postData2(EligibilityResult use){
         return used.save(use);  
     }
     @Override
-    public List<EligibilityResult>getAllData1(){
+    public List<EligibilityResult>getAllData2(){
         return used.findAll();
     }
     @Override
-    public String DeleteData1(Long id){
+    public String DeleteData2(Long id){
         used.deleteById(id);
         return "Deleted successfully";
     }
     @Override
-    public EligibilityResult getData1(Long id){
+    public EligibilityResult getData2(Long id){
     return used.findById(id).orElse(null);
     }
     @Override
-    public EligibilityResult updateData1(Long id,EligibilityResult entity){
+    public EligibilityResult updateData2(Long id,EligibilityResult entity){
         if(used.existsById(id)){
             entity.setId(id);
             return used.save(entity);
