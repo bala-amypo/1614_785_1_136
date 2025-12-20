@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class FinancialProfileServiceImpl implements UserService{
-    @Autowired FiRepository student;
+    @Autowired FinancialProfileServiceRepository student;
     @Override 
     public User postData(User stu){
         return student.save(stu);
