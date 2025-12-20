@@ -11,13 +11,13 @@ import com.example.demo.service.LoanEligibilityService;
 @Service
 public class LoanEligibilityServiceImpl implements LoanEligibilityService{
 
-    @Autowired EliRepository used;
+    @Autowired EligibilityResultRepository used;
     @Override
-    public User postData1(User use){
+    public EligibilityResult postData1(EligibilityResult use){
         return used.save(use);  
     }
     @Override
-    public List<User>getAllData1(){
+    public List<EligibilityResult>getAllData1(){
         return used.findAll();
     }
     @Override
@@ -26,11 +26,11 @@ public class LoanEligibilityServiceImpl implements LoanEligibilityService{
         return "Deleted successfully";
     }
     @Override
-    public User getData1(Long id){
+    public EligibilityResult getData1(Long id){
     return used.findById(id).orElse(null);
     }
     @Override
-    public User updateData1(Long id,User entity){
+    public EligibilityResult updateData1(Long id,EligibilityResult entity){
         if(used.existsById(id)){
             entity.setId(id);
             return used.save(entity);
