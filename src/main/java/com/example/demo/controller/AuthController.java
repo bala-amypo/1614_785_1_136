@@ -104,7 +104,7 @@ public class AuthController {
 
     @DeleteMapping("/{id}")
     public String deleteUser(@PathVariable Long id) {
-        return userService.delete(id);
+        return user.delete(id);
     }
 }
 
