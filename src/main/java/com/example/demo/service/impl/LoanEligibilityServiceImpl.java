@@ -13,8 +13,8 @@ public class LoanEligibilityServiceImpl implements LoanEligibilityService{
 
     @Autowired EligibilityResultRepository used;
     @Override
-    public EligibilityResult postData2(EligibilityResult use1){
-        return used.save(use1);  
+    public EligibilityResult postData2(EligibilityResult use){
+        return used.save(use);  
     }
     @Override
     public List<EligibilityResult>getAllData2(){
