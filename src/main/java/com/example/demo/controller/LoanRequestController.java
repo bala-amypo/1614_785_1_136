@@ -21,22 +21,22 @@ public class LoanRequestController{
     @Autowired  FinancialProfileService ser;
     @PostMapping("/register")
     public LoanRequest sendData(@RequestBody LoanRequest stu){
-        return ser.postData3(stu);
+        return ser.postData4(stu);
     }
     @GetMapping("/get")
-    public List<FinancialProfile> getval(){
-        return ser.getAllData3();
+    public List<LoanRequest> getval(){
+        return ser.getAllData4();
     }
     @DeleteMapping("/delete/{id}")
     public String del(@PathVariable Long id){
-        return ser.DeleteData3(id);
+        return ser.DeleteData4(id);
     }
     @GetMapping("/find/{id}")
-    public FinancialProfile find(@PathVariable Long id){
-        return ser.getData3(id);
+    public LoanRequest find(@PathVariable Long id){
+        return ser.getData4(id);
     }
     @PutMapping("/put/{id}")
-    public FinancialProfile putval(@PathVariable Long id,@RequestBody FinancialProfile entity){
-        return ser.updateData3(id,entity);
+    public LoanRequest putval(@PathVariable Long id,@RequestBody LoanRequest entity){
+        return ser.updateData4(id,entity);
     }
 }
