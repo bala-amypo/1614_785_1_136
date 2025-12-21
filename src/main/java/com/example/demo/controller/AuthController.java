@@ -63,20 +63,20 @@ import jakarta.validation.Valid;
 public class AuthController {
 
     @Autowired
-    private UserService userService;
+    private UserService user;
 
     /* ===================== REGISTER ===================== */
 
     @PostMapping("/register")
     public User register(@Valid @RequestBody User user) {
-        return userService.register(user);
+        return user.register(user);
     }
 
     /* ===================== LOGIN ===================== */
 
     @PostMapping("/login")
     public User login(@RequestBody User loginRequest) {
-        return userService.login(
+        return user.login(
                 loginRequest.getEmail(),
                 loginRequest.getPassword()
         );
@@ -86,12 +86,12 @@ public class AuthController {
 
     @GetMapping
     public List<User> getAllUsers() {
-        return userService.getAll();
+        return user.getAll();
     }
 
     @GetMapping("/{id}")
     public User getUser(@PathVariable Long id) {
-        return userService.getById(id);
+        return user.getById(id);
     }
 
     @PutMapping("/{id}")
@@ -99,7 +99,7 @@ public class AuthController {
             @PathVariable Long id,
             @Valid @RequestBody User user
     ) {
-        return userService.update(id, user);
+        return user.update(id, user);
     }
 
     @DeleteMapping("/{id}")
