@@ -3,21 +3,21 @@ package com.example.demo.service.impl;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;   
-import com.example.demo.entity.LoanRequest;
-import com.example.demo.repository.LoanRequestRepository;
+import com.example.demo.entity.RiskAssessmentLog;
+import com.example.demo.repository.RiskAssessmentLogRepository;
 import org.springframework.web.bind.annotation.PathVariable;
-import com.example.demo.service.Service;                
+import com.example.demo.service.RiskAssessmentService;                
 
 @Service
-public class LoanRequestServiceImpl implements LoanRequestService{
+public class RiskAssessmentServiceImpl implements RiskAssessmentService{
 
-    @Autowired LoanRequestRepository used;
+    @Autowired RiskAssessmentLogRepository used;
     @Override
-    public LoanRequest postData4(LoanRequest use){
+    public RiskAssessmentLog postData4(RiskAssessmentLog use){
         return used.save(use);  
     }
     @Override
-    public List<LoanRequest>getAllData4(){
+    public List<RiskAssessmentLog>getAllData4(){
         return used.findAll();
     }
     @Override
@@ -26,11 +26,11 @@ public class LoanRequestServiceImpl implements LoanRequestService{
         return "Deleted successfully";
     }
     @Override
-    public LoanRequest getData4(Long id){
+    public RiskAssessmentLog getData4(Long id){
     return used.findById(id).orElse(null);
     }
     @Override
-    public LoanRequest updateData4(Long id,LoanRequest entity){
+    public RiskAssessmentLog updateData4(Long id,RiskAssessmentLog entity){
         if(used.existsById(id)){
             entity.setId(id);
             return used.save(entity);
