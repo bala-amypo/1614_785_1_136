@@ -68,15 +68,15 @@ public class AuthController {
     /* ===================== REGISTER ===================== */
 
     @PostMapping("/register")
-    public User register(@Valid @RequestBody User user) {
-        return user.register(user);
+    public User register(@Valid @RequestBody User ser) {
+        return user.register(ser);
     }
 
     /* ===================== LOGIN ===================== */
 
     @PostMapping("/login")
     public User login(@RequestBody User loginRequest) {
-        return user.login(
+        return ser.login(
                 loginRequest.getEmail(),
                 loginRequest.getPassword()
         );
@@ -86,25 +86,25 @@ public class AuthController {
 
     @GetMapping
     public List<User> getAllUsers() {
-        return user.getAll();
+        return ser.getAll();
     }
 
     @GetMapping("/{id}")
     public User getUser(@PathVariable Long id) {
-        return user.getById(id);
+        return ser.getById(id);
     }
 
     @PutMapping("/{id}")
     public User updateUser(
             @PathVariable Long id,
-            @Valid @RequestBody User user
+            @Valid @RequestBody User ser
     ) {
-        return user.update(id, user);
+        return user.update(id, ser);
     }
 
     @DeleteMapping("/{id}")
     public String deleteUser(@PathVariable Long id) {
-        return user.delete(id);
+        return ser.delete(id);
     }
 }
 
