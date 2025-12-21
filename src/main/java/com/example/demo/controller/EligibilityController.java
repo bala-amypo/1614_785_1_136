@@ -16,7 +16,7 @@ import com.example.demo.service.LoanEligibilityService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/EligivilityResult")
+@RequestMapping("/EligibilityResult")
 public class EligibilityController{
     @Autowired  LoanEligibilityService ser;
     @PostMapping("/register")
