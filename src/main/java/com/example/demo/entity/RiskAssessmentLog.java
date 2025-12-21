@@ -1,6 +1,7 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -18,53 +19,32 @@ public class RiskAssessmentLog {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    /**
-     * References LoanRequest by ID only (audit entity)
-     */
+    /* ===================== Fields ===================== */
+
+    @NotNull(message = "Loan request ID is required")
     @Column(nullable = false)
     private Long loanRequestId;
 
+    @NotNull(message = "DTI ratio is required")
+    @DecimalMin(value = "0.0", inclusive = true, message = "DTI ratio must be >= 0")
     @Column(nullable = false)
     private Double dtiRatio;
 
+    @NotBlank(message = "Credit check status is required")
+    @Pattern(
+        regexp = "APPROVED|REJECTED|PENDING_REVIEW",
+        message = "creditCheckStatus must be APPROVED, REJECTED, or PENDING_REVIEW"
+    )
     @Column(nullable = false)
     private String creditCheckStatus;
 
     @Column(nullable = false, updatable = false)
     private LocalDateTime timestamp;
 
-    /* ===================== Constructors ===================== */
-
-    /**
-     * Core fields constructor
-     */
-    public RiskAssessmentLog(
-            Long loanRequestId,
-            Double dtiRatio,
-            String creditCheckStatus
-    ) {
-        this.loanRequestId = loanRequestId;
-        this.dtiRatio = dtiRatio;
-        this.creditCheckStatus = creditCheckStatus;
-    }
-
-    /* ===================== Lifecycle Hooks ===================== */
+    /* ===================== Lifecycle Hook ===================== */
 
     @PrePersist
     protected void onCreate() {
-        // Auto-populate timestamp
         this.timestamp = LocalDateTime.now();
-
-        // Validate creditCheckStatus
-        if (!"APPROVED".equals(creditCheckStatus)
-                && !"REJECTED".equals(creditCheckStatus)
-                && !"PENDING_REVIEW".equals(creditCheckStatus)) {
-            throw new IllegalArgumentException("Invalid creditCheckStatus");
-        }
-
-        // Basic validation for dtiRatio
-        if (dtiRatio == null || dtiRatio < 0) {
-            throw new IllegalArgumentException("Invalid dtiRatio");
-        }
     }
 }
