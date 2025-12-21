@@ -18,7 +18,7 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/User2")
 public class LoanRequestController{
-    @Autowired  FinancialProfileService ser;
+    @Autowired  LoanRequestService ser;
     @PostMapping("/register")
     public LoanRequest sendData(@RequestBody LoanRequest stu){
         return ser.postData4(stu);
