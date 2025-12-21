@@ -9,14 +9,14 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PathVariable;
-// import org.springframework.web.bind.annotation.RestMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import com.example.demo.entity.EligibilityResult;
 import com.example.demo.service.UserService;
 import com.example.demo.service.LoanEligibilityService;
 import jakarta.validation.Valid;
 
 @RestController
-// @RestMapping("/User1")
+@RequestMapping("/User1")
 public class EligibilityController{
     @Autowired  LoanEligibilityService ser;
     @PostMapping("/register")
