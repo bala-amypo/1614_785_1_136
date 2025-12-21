@@ -23,6 +23,10 @@ public class AuthController{
     public User sendData(@RequestBody User stu){
         return ser.postData1(stu);
     }
+     @PostMapping("/login")
+    public User sendData1(@RequestBody User stu1){
+        return ser.postData11(stu1);
+    }
     @GetMapping("/get")
     public List<User> getval(){
         return ser.getAllData1();

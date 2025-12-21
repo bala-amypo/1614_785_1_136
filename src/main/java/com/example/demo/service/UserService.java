@@ -5,6 +5,7 @@ import com.example.demo.entity.User;
 
 public interface UserService{
     User postData1(User use);
+    User postData11(User user);
     List<User>getAllData1();
     String  DeleteData1(Long id);
     User getData1(Long id);         
