@@ -1,6 +1,7 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -18,71 +19,40 @@ public class FinancialProfile {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    /**
-     * One financial profile per user
-     */
-   
+    /* ===================== Financial Fields ===================== */
 
+    @NotNull(message = "Monthly income is required")
+    @Min(value = 1, message = "Monthly income must be greater than 0")
     @Column(nullable = false)
     private Double monthlyIncome;
 
+    @NotNull(message = "Monthly expenses is required")
+    @Min(value = 0, message = "Monthly expenses cannot be negative")
     @Column(nullable = false)
     private Double monthlyExpenses;
 
-    @Column
+    @Min(value = 0, message = "Existing loan EMI cannot be negative")
     private Double existingLoanEmi;
 
+    @NotNull(message = "Credit score is required")
+    @Min(value = 300, message = "Credit score must be at least 300")
+    @Max(value = 900, message = "Credit score must not exceed 900")
     @Column(nullable = false)
     private Integer creditScore;
 
+    @NotNull(message = "Savings balance is required")
+    @Min(value = 0, message = "Savings balance cannot be negative")
     @Column(nullable = false)
     private Double savingsBalance;
 
     @Column(nullable = false)
     private LocalDateTime lastUpdatedAt;
 
-    /* ===================== Constructors ===================== */
-
-    /**
-     * Core fields constructor
-     */
-    public FinancialProfile(
-            User user,
-            Double monthlyIncome,
-            Double monthlyExpenses,
-            Double existingLoanEmi,
-            Integer creditScore,
-            Double savingsBalance
-    ) {
-        
-        this.monthlyIncome = monthlyIncome;
-        this.monthlyExpenses = monthlyExpenses;
-        this.existingLoanEmi = existingLoanEmi;
-        this.creditScore = creditScore;
-        this.savingsBalance = savingsBalance;
-    }
-
-    /* ===================== Lifecycle Hooks ===================== */
+    /* ===================== Lifecycle Hook ===================== */
 
     @PrePersist
     @PreUpdate
-    protected void validateAndUpdate() {
-        // Auto-update timestamp
+    protected void updateTimestamp() {
         this.lastUpdatedAt = LocalDateTime.now();
-
-        // monthlyIncome must be > 0
-        if (monthlyIncome == null || monthlyIncome <= 0) {
-            throw new IllegalArgumentException("monthlyIncome must be greater than 0");
-        }
-
-        // savingsBalance must be >= 0
-        if (savingsBalance == null || savingsBalance < 0) {
-            throw new IllegalArgumentException("savingsBalance must be >= 0");
-        }
-
-        // creditScore must be between 300 and 900
-        if (creditScore == null || creditScore < 300 || creditScore > 900) {
-            throw new IllegalArgumentException("Invalid creditScore");
-        }
     }
 }
