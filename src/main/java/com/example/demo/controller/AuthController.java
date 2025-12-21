@@ -15,7 +15,7 @@ import com.example.demo.service.UserService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/User")"
+@RequestMapping("/User")
 public class AuthController{
     @Autowired  UserService ser;
     @PostMapping("/register")
