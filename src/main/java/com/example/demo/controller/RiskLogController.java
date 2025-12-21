@@ -16,7 +16,7 @@ import com.example.demo.service.RiskAssessmentService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/User4")
+@RequestMapping("/RiskAssessmentLog")
 public class RiskLogController{
     @Autowired  RiskAssessmentService ser;
     @PostMapping("/register")

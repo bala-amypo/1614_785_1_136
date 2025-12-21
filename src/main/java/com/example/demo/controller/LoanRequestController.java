@@ -16,7 +16,7 @@ import com.example.demo.service.LoanRequestService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/User3")
+@RequestMapping("/LoanRequest")
 public class LoanRequestController{
     @Autowired  LoanRequestService ser;
     @PostMapping("/register")

@@ -16,7 +16,7 @@ import com.example.demo.service.FinancialProfileService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/User2")
+@RequestMapping("/FinancialProfile")
 public class FinancialProfileController{
     @Autowired  FinancialProfileService ser;
     @PostMapping("/register")
