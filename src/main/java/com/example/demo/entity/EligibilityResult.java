@@ -1,6 +1,7 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -18,72 +19,39 @@ public class EligibilityResult {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    /* ===================== Relationships ===================== */
-
-   
-
     /* ===================== Fields ===================== */
 
+    @NotNull(message = "Eligibility flag is required")
     @Column(nullable = false)
     private Boolean isEligible;
 
+    @NotNull(message = "Max eligible amount is required")
+    @Min(value = 0, message = "Max eligible amount must be >= 0")
     @Column(nullable = false)
     private Double maxEligibleAmount;
 
+    @NotNull(message = "Estimated EMI is required")
+    @Min(value = 0, message = "Estimated EMI must be >= 0")
     @Column(nullable = false)
     private Double estimatedEmi;
 
+    @NotBlank(message = "Risk level is required")
+    @Pattern(
+        regexp = "LOW|MEDIUM|HIGH",
+        message = "Risk level must be LOW, MEDIUM, or HIGH"
+    )
     @Column(nullable = false)
     private String riskLevel;
 
-    @Column
     private String rejectionReason;
 
     @Column(nullable = false, updatable = false)
     private LocalDateTime calculatedAt;
 
-    /* ===================== Constructors ===================== */
-
-    /**
-     * Core fields constructor
-     */
-    public EligibilityResult(
-            LoanRequest loanRequest,
-            Boolean isEligible,
-            Double maxEligibleAmount,
-            Double estimatedEmi,
-            String riskLevel,
-            String rejectionReason
-    ) {
-        
-        this.isEligible = isEligible;
-        this.maxEligibleAmount = maxEligibleAmount;
-        this.estimatedEmi = estimatedEmi;
-        this.riskLevel = riskLevel;
-        this.rejectionReason = rejectionReason;
-    }
-
-    /* ===================== Lifecycle Hooks ===================== */
+    /* ===================== Lifecycle Hook ===================== */
 
     @PrePersist
     protected void onCreate() {
-        // Auto-populate timestamp
         this.calculatedAt = LocalDateTime.now();
-
-        // Validate risk level
-        if (!riskLevel.equals("LOW")
-                && !riskLevel.equals("MEDIUM")
-                && !riskLevel.equals("HIGH")) {
-            throw new IllegalArgumentException("Invalid riskLevel");
-        }
-
-        // rejectionReason only if not eligible
-        if (Boolean.TRUE.equals(isEligible) && rejectionReason != null) {
-            throw new IllegalStateException("rejectionReason must be null when eligible");
-        }
-
-        if (Boolean.FALSE.equals(isEligible) && (rejectionReason == null || rejectionReason.isBlank())) {
-            throw new IllegalStateException("rejectionReason must be provided when not eligible");
-        }
     }
 }
