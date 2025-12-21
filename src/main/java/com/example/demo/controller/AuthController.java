@@ -45,7 +45,6 @@
 //     }
 // }
 
-
 package com.example.demo.controller;
 
 import java.util.List;
@@ -59,54 +58,46 @@ import com.example.demo.service.UserService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/users") // use lowercase and plural for REST conventions
 public class AuthController {
 
     @Autowired
-    private UserService user;
+    private UserService userService;
 
     /* ===================== REGISTER ===================== */
-
     @PostMapping("/register")
-    public User register(@Valid @RequestBody User ser) {
-        return user.register(ser);
+    public User register(@Valid @RequestBody User user) {
+        return userService.postData1(user);
     }
 
     /* ===================== LOGIN ===================== */
-
     @PostMapping("/login")
-    public User login(@RequestBody User loginRequest) {
-        return ser.login(
-                loginRequest.getEmail(),
-                loginRequest.getPassword()
-        );
+    public User login(@RequestBody User user) {
+        // Using your existing service method
+        return userService.postData11(user);
     }
 
-    /* ===================== CRUD ===================== */
-
+    /* ===================== GET ALL USERS ===================== */
     @GetMapping
     public List<User> getAllUsers() {
-        return ser.getAll();
+        return userService.getAllData1();
     }
 
+    /* ===================== GET USER BY ID ===================== */
     @GetMapping("/{id}")
     public User getUser(@PathVariable Long id) {
-        return ser.getById(id);
+        return userService.getData1(id);
     }
 
+    /* ===================== UPDATE USER ===================== */
     @PutMapping("/{id}")
-    public User updateUser(
-            @PathVariable Long id,
-            @Valid @RequestBody User ser
-    ) {
-        return user.update(id, ser);
+    public User updateUser(@PathVariable Long id, @RequestBody User user) {
+        return userService.updateData1(id, user);
     }
 
+    /* ===================== DELETE USER ===================== */
     @DeleteMapping("/{id}")
     public String deleteUser(@PathVariable Long id) {
-        return ser.delete(id);
+        return userService.DeleteData1(id);
     }
 }
-
-
-
