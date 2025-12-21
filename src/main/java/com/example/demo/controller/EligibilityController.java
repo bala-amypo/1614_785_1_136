@@ -12,10 +12,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestMapping;
 import com.example.demo.entity.EligibilityResult;
 import com.example.demo.service.UserService;
+import com.example.demo.service.LoanEligibilityService;
 import jakarta.validation.Valid;
 
 @RestController
-@RestMapping("/")
+@RestMapping("/User1")
 public class EligibilityController{
     @Autowired  LoanEligibilityService ser;
     @PostMapping("/register")
