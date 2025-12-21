@@ -9,28 +9,28 @@ import org.springframework.web.bind.annotation.PathVariable;
 import com.example.demo.service.LoanRequestService;                
 
 @Service
-public class LoanEligibilityServiceImpl implements LoanEligibilityService{
+public class LoanRequestServiceImpl implements LoanRequestService{
 
-    @Autowired EligibilityResultRepository used;
+    @Autowired LoanRequestRepository used;
     @Override
-    public EligibilityResult postData2(EligibilityResult use){
+    public LoanRequest postData4(LoanRequest use){
         return used.save(use);  
     }
     @Override
-    public List<EligibilityResult>getAllData2(){
+    public List<LoanRequest>getAllData4(){
         return used.findAll();
     }
     @Override
-    public String DeleteData2(Long id){
+    public String DeleteData4(Long id){
         used.deleteById(id);
         return "Deleted successfully";
     }
     @Override
-    public EligibilityResult getData2(Long id){
+    public LoanRequest getData4(Long id){
     return used.findById(id).orElse(null);
     }
     @Override
-    public EligibilityResult updateData2(Long id,EligibilityResult entity){
+    public LoanRequest updateData4(Long id,LoanRequest entity){
         if(used.existsById(id)){
             entity.setId(id);
             return used.save(entity);
