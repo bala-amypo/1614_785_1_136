@@ -12,15 +12,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.example.demo.entity.EligibilityResult;
 import com.example.demo.service.UserService;
-import com.example.demo.service.LoanEligibilityService;
+import com.example.demo.service.FinancialProfileService;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/User1")
-public class EligibilityController{
-    @Autowired  LoanEligibilityService ser;
+public class FinancialProfileController{
+    @Autowired  FinancialProfileService ser;
     @PostMapping("/register")
-    public EligibilityResult sendData(@RequestBody EligibilityResult stu){
+    public FinancialProfile sendData(@RequestBody FinancialProfile stu){
         return ser.postData2(stu);
     }
     @GetMapping("/get")
