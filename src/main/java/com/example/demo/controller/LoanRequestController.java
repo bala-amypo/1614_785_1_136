@@ -11,16 +11,16 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.example.demo.entity.LoanRequest;
-import com.example.demo.service.UserService;
-import com.example.demo.service.FinancialProfileService;
+// import com.example.demo.service.UserService;
+import com.example.demo.service.LoanRequestService;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/User2")
-public class FinancialProfileController{
+public class LoanRequestController{
     @Autowired  FinancialProfileService ser;
     @PostMapping("/register")
-    public FinancialProfile sendData(@RequestBody FinancialProfile stu){
+    public LoanRequest sendData(@RequestBody LoanRequest stu){
         return ser.postData3(stu);
     }
     @GetMapping("/get")
