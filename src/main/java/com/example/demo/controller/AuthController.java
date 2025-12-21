@@ -58,44 +58,40 @@ import com.example.demo.service.UserService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/users") // use lowercase and plural for REST conventions
+@RequestMapping("/users") 
 public class AuthController {
 
     @Autowired
     private UserService userService;
 
-    /* ===================== REGISTER ===================== */
     @PostMapping("/register")
     public User register(@Valid @RequestBody User user) {
         return userService.postData1(user);
     }
 
-    /* ===================== LOGIN ===================== */
     @PostMapping("/login")
     public User login(@RequestBody User user) {
-        // Using your existing service method
+        
         return userService.postData11(user);
     }
 
-    /* ===================== GET ALL USERS ===================== */
     @GetMapping
     public List<User> getAllUsers() {
         return userService.getAllData1();
     }
 
-    /* ===================== GET USER BY ID ===================== */
+   
     @GetMapping("/{id}")
     public User getUser(@PathVariable Long id) {
         return userService.getData1(id);
     }
 
-    /* ===================== UPDATE USER ===================== */
+    
     @PutMapping("/{id}")
     public User updateUser(@PathVariable Long id, @RequestBody User user) {
         return userService.updateData1(id, user);
     }
 
-    /* ===================== DELETE USER ===================== */
     @DeleteMapping("/{id}")
     public String deleteUser(@PathVariable Long id) {
         return userService.DeleteData1(id);
