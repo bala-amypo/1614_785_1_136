@@ -18,7 +18,7 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/RiskAssessmentLog")
 public class RiskLogController{
-    @Autowired  RiskAssessmentService ser;
+    @Autowired  RiskAssessmentLogService ser;
     @PostMapping("/register")
     public RiskAssessmentLog sendData(@RequestBody RiskAssessmentLog stu){
         return ser.postData5(stu);
