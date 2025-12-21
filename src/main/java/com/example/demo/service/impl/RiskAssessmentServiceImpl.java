@@ -6,10 +6,10 @@ import org.springframework.stereotype.Service;
 import com.example.demo.entity.RiskAssessmentLog;
 import com.example.demo.repository.RiskAssessmentLogRepository;
 import org.springframework.web.bind.annotation.PathVariable;
-import com.example.demo.service.RiskAssessmentService;                
+import com.example.demo.service.RiskAssessmentLogService;                
 
 @Service
-public class RiskAssessmentServiceImpl implements RiskAssessmentService{
+public class RiskAssessmentLogServiceImpl implements RiskAssessmentLogService{
 
     @Autowired RiskAssessmentLogRepository used;
     @Override
