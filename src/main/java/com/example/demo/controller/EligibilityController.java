@@ -19,23 +19,23 @@ import jakarta.validation.Valid;
 @RequestMapping("/User1")
 public class EligibilityController{
     @Autowired  LoanEligibilityService ser;
-    @PostMapping("/register")
+    @PostMapping("/register1")
     public EligibilityResult sendData(@RequestBody EligibilityResult stu){
         return ser.postData2(stu);
     }
-    @GetMapping("/get")
+    @GetMapping("/get1")
     public List<EligibilityResult> getval(){
         return ser.getAllData2();
     }
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/delete1/{id}")
     public String del(@PathVariable Long id){
         return ser.DeleteData2(id);
     }
-    @GetMapping("/find/{id}")
+    @GetMapping("/find1/{id}")
     public EligibilityResult find(@PathVariable Long id){
         return ser.getData2(id);
     }
-    @PutMapping("/put/{id}")
+    @PutMapping("/put1/{id}")
     public EligibilityResult putval(@PathVariable Long id,@RequestBody EligibilityResult entity){
         return ser.updateData2(id,entity);
     }
