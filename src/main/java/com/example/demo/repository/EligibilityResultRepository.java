@@ -5,6 +5,6 @@ import org.springframework.stereotype.Repository;
 import com.example.demo.entity.EligibilityResult;
 
 @Repository
-public interface EligibilityRepository extends JpaRepository<EligibilityResult,Long>{
+public interface EligibilityResultRepository extends JpaRepository<EligibilityResult,Long>{
 
 }
