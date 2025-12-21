@@ -13,24 +13,24 @@ public class RiskAssessmentServiceImpl implements RiskAssessmentService{
 
     @Autowired RiskAssessmentLogRepository used;
     @Override
-    public RiskAssessmentLog postData4(RiskAssessmentLog use){
+    public RiskAssessmentLog postData5(RiskAssessmentLog use){
         return used.save(use);  
     }
     @Override
-    public List<RiskAssessmentLog>getAllData4(){
+    public List<RiskAssessmentLog>getAllData5(){
         return used.findAll();
     }
     @Override
-    public String DeleteData4(Long id){
+    public String DeleteData5(Long id){
         used.deleteById(id);
         return "Deleted successfully";
     }
     @Override
-    public RiskAssessmentLog getData4(Long id){
+    public RiskAssessmentLog getData5(Long id){
     return used.findById(id).orElse(null);
     }
     @Override
-    public RiskAssessmentLog updateData4(Long id,RiskAssessmentLog entity){
+    public RiskAssessmentLog updateData5(Long id,RiskAssessmentLog entity){
         if(used.existsById(id)){
             entity.setId(id);
             return used.save(entity);
