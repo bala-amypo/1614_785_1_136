@@ -14,7 +14,7 @@ public class FinancialProfileServiceImpl implements FinancialProfileService{
     @Autowired FinancialProfileRepository used;
     @Override
     public FinancialProfile postData3(FinancialProfile use){
-        return used.save(use1);  
+        return used.save(use);  
     }
     @Override
     public List<FinancialProfile>getAllData3(){
