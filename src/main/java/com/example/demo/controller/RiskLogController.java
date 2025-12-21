@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.example.demo.entity.RiskAssessmentLog;
 // import com.example.demo.service.UserService;
-import com.example.demo.service.RiskAssessmentService;
+import com.example.demo.service.RiskAssessmentLogService;
 import jakarta.validation.Valid;
 
 @RestController

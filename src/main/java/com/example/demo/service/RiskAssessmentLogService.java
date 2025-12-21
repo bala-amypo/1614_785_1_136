@@ -3,7 +3,7 @@ package com.example.demo.service;
 import java.util.List;
 import com.example.demo.entity.RiskAssessmentLog;
 
-public interface RiskAssessmentService{
+public interface RiskAssessmentLogService{
     RiskAssessmentLog postData5(RiskAssessmentLog use);
     List<RiskAssessmentLog>getAllData5();
     String  DeleteData5(Long id);
