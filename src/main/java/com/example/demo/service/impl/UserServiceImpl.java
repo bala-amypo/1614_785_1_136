@@ -7,7 +7,7 @@ import com.example.demo.entity.User;
 import com.example.demo.repository.UserRepository;
 import org.springframework.web.bind.annotation.PathVariable;
 import com.example.demo.service.UserService;                
-
+import com.example.demo.exception.ResourceNot
 @Service
 public class UserServiceImpl implements UserService{
 
@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService{
     }
     @Override
     public User getData1(Long id){
-    return used.findById(id).orElse(null);
+    return used.findById(id).orElseThrow(()->new ResourceNotFoundException("Not Found"));
     }
     @Override
     public User updateData1(Long id,User entity){
