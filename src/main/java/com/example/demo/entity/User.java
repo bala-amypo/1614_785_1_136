@@ -29,9 +29,6 @@ public class User {
     @Column(nullable = false, unique = true)
     private String email;
 
-    /**
-     * Stored only in hashed form
-     */
     @Column(nullable = false)
     private String password;
 
@@ -41,9 +38,6 @@ public class User {
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
-    /**
-     * Core fields constructor
-     */
     public User(String fullName, String email, String password, String role) {
         this.fullName = fullName;
         this.email = email;
@@ -51,13 +45,11 @@ public class User {
         this.role = role;
     }
 
-    /* ===================== Lifecycle Hooks ===================== */
 
     @PrePersist
     protected void onCreate() {
         this.createdAt = LocalDateTime.now();
-
-        // Default role
+        
         if (this.role == null || this.role.isBlank()) {
             this.role = "CUSTOMER";
         }

@@ -19,8 +19,7 @@ public class RiskAssessmentLog {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    /* ===================== Fields ===================== */
-
+  
     @NotNull(message = "Loan request ID is required")
     @Column(nullable = false)
     private Long loanRequestId;
@@ -41,7 +40,6 @@ public class RiskAssessmentLog {
     @Column(nullable = false, updatable = false)
     private LocalDateTime timestamp;
 
-    /* ===================== Lifecycle Hook ===================== */
 
     @PrePersist
     protected void onCreate() {
