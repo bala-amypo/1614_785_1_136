@@ -19,7 +19,6 @@ public class EligibilityResult {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    /* ===================== Fields ===================== */
 
     @NotNull(message = "Eligibility flag is required")
     @Column(nullable = false)
@@ -48,7 +47,6 @@ public class EligibilityResult {
     @Column(nullable = false, updatable = false)
     private LocalDateTime calculatedAt;
 
-    /* ===================== Lifecycle Hook ===================== */
 
     @PrePersist
     protected void onCreate() {

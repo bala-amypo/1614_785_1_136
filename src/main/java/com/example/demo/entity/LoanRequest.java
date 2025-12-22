@@ -19,7 +19,6 @@ public class LoanRequest {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    /* ===================== Fields ===================== */
 
     @NotNull(message = "Requested amount is required")
     @Min(value = 1, message = "Requested amount must be greater than 0")
@@ -44,7 +43,6 @@ public class LoanRequest {
     @Column(nullable = false, updatable = false)
     private LocalDateTime appliedAt;
 
-    /* ===================== Lifecycle Hooks ===================== */
 
     @PrePersist
     protected void onCreate() {

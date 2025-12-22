@@ -19,8 +19,6 @@ public class FinancialProfile {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    /* ===================== Financial Fields ===================== */
-
     @NotNull(message = "Monthly income is required")
     @Min(value = 1, message = "Monthly income must be greater than 0")
     @Column(nullable = false)
@@ -48,7 +46,6 @@ public class FinancialProfile {
     @Column(nullable = false)
     private LocalDateTime lastUpdatedAt;
 
-    /* ===================== Lifecycle Hook ===================== */
 
     @PrePersist
     @PreUpdate
