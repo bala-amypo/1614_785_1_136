@@ -7,7 +7,7 @@ import com.example.demo.entity.User;
 import com.example.demo.repository.UserRepository;
 import org.springframework.web.bind.annotation.PathVariable;
 import com.example.demo.service.UserService;                
-import com.example.demo.exception.ResourceNot
+import com.example.demo.exception.ResourceNotFoundException;
 @Service
 public class UserServiceImpl implements UserService{
 
