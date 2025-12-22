@@ -54,35 +54,74 @@
 
 
 
-package com.example.demo.entity;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
-import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "users")
-public class User {
+package com.example.demo.controller;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+import java.util.List;
 
-    @NotBlank(message = "Full name is required")
-    @Size(min = 3, max = 50, message = "Full name must be 3-50 characters")
-    private String fullName;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-    @NotBlank(message = "Email is required")
-    @Email(message = "Email must be valid")
-    @Column(unique = true)
-    private String email;
+import com.example.demo.entity.User;
+import com.example.demo.service.UserService;
 
-    @NotBlank(message = "Password is required")
-    @Size(min = 6, message = "Password must be at least 6 characters")
-    private String password;
+import jakarta.validation.Valid;
 
-    @NotBlank(message = "Role is required")
-    private String role = "CUSTOMER"; 
+@RestController
+@RequestMapping("/users")
+public class AuthController {
 
-    private LocalDateTime createdAt = LocalDateTime.now();
+    private final UserService userService;
+
+    // Constructor injection is preferred over @Autowired
+    public AuthController(UserService userService) {
+        this.userService = userService;
+    }
+
+    /** ===================== REGISTER ===================== **/
+    @PostMapping("/register")
+    public ResponseEntity<User> register(@Valid @RequestBody User user) {
+        User savedUser = userService.postData1(user);
+        return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
+    }
+
+    /** ===================== LOGIN ===================== **/
+    @PostMapping("/login")
+    public ResponseEntity<User> login(@RequestBody User user) {
+        User loggedInUser = userService.postData11(user);
+        return ResponseEntity.ok(loggedInUser);
+    }
+
+    /** ===================== GET ALL USERS ===================== **/
+    @GetMapping
+    public ResponseEntity<List<User>> getAllUsers() {
+        List<User> users = userService.getAllData1();
+        return ResponseEntity.ok(users);
+    }
+
+    /** ===================== GET USER BY ID ===================== **/
+    @GetMapping("/{id}")
+    public ResponseEntity<User> getUser(@PathVariable Long id) {
+        User user = userService.getData1(id);
+        return ResponseEntity.ok(user);
+    }
+
+    /** ===================== UPDATE USER ===================== **/
+    @PutMapping("/{id}")
+    public ResponseEntity<User> updateUser(@PathVariable Long id, @Valid @RequestBody User user) {
+        User updatedUser = userService.updateData1(id, user);
+        if (updatedUser == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(updatedUser);
+    }
+
+    /** ===================== DELETE USER ===================== **/
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteUser(@PathVariable Long id) {
+        String message = userService.DeleteData1(id);
+        return ResponseEntity.ok(message);
+    }
 }
