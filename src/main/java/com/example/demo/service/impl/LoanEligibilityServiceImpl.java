@@ -161,3 +161,14 @@ public class LoanEligibilityServiceImpl {
                         new ResourceNotFoundException("Eligibility result not found"));
     }
 }
+
+
+
+
+
+
+
+
+
+
+
