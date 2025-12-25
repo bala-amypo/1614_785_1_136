@@ -48,7 +48,7 @@ public class LoanEligibilityServiceImpl {
     private final FinancialProfileRepository fpRepo;
     private final EligibilityResultRepository erRepo;
 
-    public EligibilityServiceImpl(LoanRequestRepository l,
+    public LoanEligibilityServiceImpl(LoanRequestRepository l,
                                   FinancialProfileRepository f,
                                   EligibilityResultRepository e) {
         loanRepo = l; fpRepo = f; erRepo = e;

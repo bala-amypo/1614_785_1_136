@@ -47,9 +47,9 @@ public class RiskAssessmentLogServiceImpl {
     private final FinancialProfileRepository fpRepo;
     private final RiskAssessmentRepository raRepo;
 
-    public RiskAssessmentServiceImpl(LoanRequestRepository l,
+    public RiskAssessmentLogServiceImpl(LoanRequestRepository l,
                                      FinancialProfileRepository f,
-                                     RiskAssessmentRepository r) {
+                                     RiskAssessmentLogRepository r) {
         loanRepo = l; fpRepo = f; raRepo = r;
     }
 
