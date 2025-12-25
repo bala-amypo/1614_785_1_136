@@ -102,12 +102,15 @@ package com.example.demo.service.impl;
 
 import com.example.demo.entity.FinancialProfile;
 import com.example.demo.entity.LoanRequest;
-import com.example.demo.entity.RiskAssessment;
 import com.example.demo.exception.BadRequestException;
 import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repository.FinancialProfileRepository;
 import com.example.demo.repository.LoanRequestRepository;
-import com.example.demo.repository.RiskAssessmentRepository;
+
+
+import com.example.demo.entity.RiskAssessmentLog;
+import com.example.demo.repository.RiskAssessmentLogRepository;
+
 
 public class RiskAssessmentLogServiceImpl {
 

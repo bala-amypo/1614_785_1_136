@@ -50,12 +50,48 @@
 
 
 
-package com.example.demo.entity;
- import jakarta.persistence.*;
- import jakarta.validation.constraints.*;
- import lombok.*;
+// package com.example.demo.entity;
+//  import jakarta.persistence.*;
+//  import jakarta.validation.constraints.*;
+//  import lombok.*;
 
- import java.time.LocalDateTime;
+//  import java.time.LocalDateTime;
+
+// @Entity
+// public class RiskAssessmentLog {
+
+//     @Id
+//     @GeneratedValue(strategy = GenerationType.IDENTITY)
+//     private Long id;
+
+//     private Long loanRequestId;
+//     private Double dtiRatio;
+//     private Double riskScore;
+
+//     private LocalDateTime timestamp;
+
+//     @PrePersist
+//     void ts() {
+//         timestamp = LocalDateTime.now();
+//     }
+
+//     // getters & setters
+// }
+
+
+
+
+
+
+package com.example.demo.entity;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
+
+import java.time.LocalDateTime;
 
 @Entity
 public class RiskAssessmentLog {
@@ -65,15 +101,52 @@ public class RiskAssessmentLog {
     private Long id;
 
     private Long loanRequestId;
+
     private Double dtiRatio;
+
     private Double riskScore;
 
     private LocalDateTime timestamp;
 
     @PrePersist
-    void ts() {
+    void onCreate() {
         timestamp = LocalDateTime.now();
     }
 
-    // getters & setters
+    // getters and setters
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getLoanRequestId() {
+        return loanRequestId;
+    }
+
+    public void setLoanRequestId(Long loanRequestId) {
+        this.loanRequestId = loanRequestId;
+    }
+
+    public Double getDtiRatio() {
+        return dtiRatio;
+    }
+
+    public void setDtiRatio(Double dtiRatio) {
+        this.dtiRatio = dtiRatio;
+    }
+
+    public Double getRiskScore() {
+        return riskScore;
+    }
+
+    public void setRiskScore(Double riskScore) {
+        this.riskScore = riskScore;
+    }
+
+    public LocalDateTime getTimestamp() {
+        return timestamp;
+    }
 }
