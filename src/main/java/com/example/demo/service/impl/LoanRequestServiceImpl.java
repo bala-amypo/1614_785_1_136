@@ -197,6 +197,67 @@
 
 
 
+// package com.example.demo.service.impl;
+
+// import com.example.demo.entity.LoanRequest;
+// import com.example.demo.exception.BadRequestException;
+// import com.example.demo.exception.ResourceNotFoundException;
+// import com.example.demo.repository.LoanRequestRepository;
+// import com.example.demo.repository.UserRepository;
+
+// import org.springframework.stereotype.Service;
+
+// import java.util.List;
+// import java.util.Optional;
+
+// @Service
+// public class LoanRequestServiceImpl {
+
+//     private final LoanRequestRepository repository;
+//     private final UserRepository userRepository;
+
+//     public LoanRequestServiceImpl(LoanRequestRepository repository,
+//                                   UserRepository userRepository) {
+//         this.repository = repository;
+//         this.userRepository = userRepository;
+//     }
+
+//     public LoanRequest submitRequest(LoanRequest request) {
+
+//         if (request.getRequestedAmount() <= 0) {
+//             throw new BadRequestException("Requested amount must be greater than zero");
+//         }
+
+//         // Check if user exists
+//         Optional.ofNullable(request.getUser())
+//                 .flatMap(u -> userRepository.findById(u.getId()))
+//                 .orElseThrow(() ->
+//                         new ResourceNotFoundException("User not found"));
+
+//         // Set initial status
+//         request.setStatus(LoanRequest.Status.PENDING.name());
+
+//         return repository.save(request);
+//     }
+
+//     public LoanRequest getById(Long id) {
+//         return repository.findById(id)
+//                 .orElseThrow(() ->
+//                         new ResourceNotFoundException("Loan request not found"));
+//     }
+
+//     public List<LoanRequest> getRequestsByUser(Long userId) {
+//         return repository.findByUserId(userId);
+//     }
+// }
+
+
+
+
+
+
+
+
 package com.example.demo.service.impl;
 
 import com.example.demo.entity.LoanRequest;
@@ -204,11 +265,10 @@ import com.example.demo.exception.BadRequestException;
 import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repository.LoanRequestRepository;
 import com.example.demo.repository.UserRepository;
-
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
+import java.util.List;
 
 @Service
 public class LoanRequestServiceImpl {
@@ -234,8 +294,8 @@ public class LoanRequestServiceImpl {
                 .orElseThrow(() ->
                         new ResourceNotFoundException("User not found"));
 
-        // Set initial status
-        request.setStatus(LoanRequest.Status.PENDING.name());
+        // Set initial status using enum
+        request.setStatus(LoanRequest.Status.PENDING);
 
         return repository.save(request);
     }

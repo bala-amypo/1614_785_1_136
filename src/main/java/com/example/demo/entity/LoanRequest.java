@@ -97,12 +97,57 @@
 
 
 
+// package com.example.demo.entity;
+
+// import jakarta.persistence.*;
+
+// @Entity
+// public class LoanRequest {
+
+//     @Id
+//     @GeneratedValue(strategy = GenerationType.IDENTITY)
+//     private Long id;
+
+//     @ManyToOne
+//     private User user;
+
+//     private double requestedAmount;
+//     private int tenureMonths;
+//     private String status;
+
+//     // Getters and Setters
+//     public Long getId() { return id; }
+//     public void setId(Long id) { this.id = id; }
+
+//     public User getUser() { return user; }
+//     public void setUser(User user) { this.user = user; }
+
+//     public double getRequestedAmount() { return requestedAmount; }
+//     public void setRequestedAmount(double requestedAmount) { this.requestedAmount = requestedAmount; }
+
+//     public int getTenureMonths() { return tenureMonths; }
+//     public void setTenureMonths(int tenureMonths) { this.tenureMonths = tenureMonths; }
+
+//     public String getStatus() { return status; }
+//     public void setStatus(String status) { this.status = status; }
+// }
+
+
+
+
+
+
+
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
 
 @Entity
 public class LoanRequest {
+
+    public enum Status {
+        PENDING, APPROVED, REJECTED
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -111,9 +156,11 @@ public class LoanRequest {
     @ManyToOne
     private User user;
 
-    private double requestedAmount;
+    private Double requestedAmount;
     private int tenureMonths;
-    private String status;
+
+    @Enumerated(EnumType.STRING)
+    private Status status;
 
     // Getters and Setters
     public Long getId() { return id; }
@@ -122,12 +169,12 @@ public class LoanRequest {
     public User getUser() { return user; }
     public void setUser(User user) { this.user = user; }
 
-    public double getRequestedAmount() { return requestedAmount; }
-    public void setRequestedAmount(double requestedAmount) { this.requestedAmount = requestedAmount; }
+    public Double getRequestedAmount() { return requestedAmount; }
+    public void setRequestedAmount(Double requestedAmount) { this.requestedAmount = requestedAmount; }
 
     public int getTenureMonths() { return tenureMonths; }
     public void setTenureMonths(int tenureMonths) { this.tenureMonths = tenureMonths; }
 
-    public String getStatus() { return status; }
-    public void setStatus(String status) { this.status = status; }
+    public Status getStatus() { return status; }
+    public void setStatus(Status status) { this.status = status; }
 }
