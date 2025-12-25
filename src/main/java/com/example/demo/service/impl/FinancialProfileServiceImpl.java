@@ -86,6 +86,62 @@
 
 
 
+// package com.example.demo.service.impl;
+
+// import com.example.demo.entity.FinancialProfile;
+// import com.example.demo.entity.User;
+// import com.example.demo.exception.BadRequestException;
+// import com.example.demo.exception.ResourceNotFoundException;
+// import com.example.demo.repository.FinancialProfileRepository;
+// import com.example.demo.repository.UserRepository;
+
+// import java.util.Optional;
+
+// public class FinancialProfileServiceImpl {
+
+//     private final FinancialProfileRepository repository;
+//     private final UserRepository userRepository;
+
+//     public FinancialProfileServiceImpl(FinancialProfileRepository repository,
+//                                        UserRepository userRepository) {
+//         this.repository = repository;
+//         this.userRepository = userRepository;
+//     }
+
+//     public FinancialProfile createOrUpdate(FinancialProfile profile) {
+
+//         if (profile.getCreditScore() < 300 || profile.getCreditScore() > 900) {
+//             throw new BadRequestException("creditScore");
+//         }
+
+//         Long userId = profile.getUser().getId();
+
+//         User user = userRepository.findById(userId)
+//                 .orElseThrow(() ->
+//                         new ResourceNotFoundException("User not found"));
+
+//         Optional<FinancialProfile> existing =
+//                 repository.findByUserId(userId);
+
+//         if (existing.isPresent()) {
+//             profile.setId(existing.get().getId());
+//         }
+
+//         profile.setUser(user);
+//         return repository.save(profile);
+//     }
+
+//     public FinancialProfile getByUserId(Long userId) {
+//         return repository.findByUserId(userId)
+//                 .orElseThrow(() ->
+//                         new ResourceNotFoundException("Financial profile not found"));
+//     }
+// }
+
+
+
+
+
 package com.example.demo.service.impl;
 
 import com.example.demo.entity.FinancialProfile;
@@ -110,8 +166,14 @@ public class FinancialProfileServiceImpl {
 
     public FinancialProfile createOrUpdate(FinancialProfile profile) {
 
-        if (profile.getCreditScore() < 300 || profile.getCreditScore() > 900) {
-            throw new BadRequestException("creditScore");
+        if (profile.getCreditScore() == null ||
+            profile.getCreditScore() < 300 ||
+            profile.getCreditScore() > 900) {
+            throw new BadRequestException("Invalid credit score");
+        }
+
+        if (profile.getUser() == null || profile.getUser().getId() == null) {
+            throw new BadRequestException("User is required");
         }
 
         Long userId = profile.getUser().getId();
