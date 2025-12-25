@@ -37,7 +37,7 @@ public class LoanEligibilityServiceImpl implements LoanEligibilityService {
         this.resultRepo = resultRepo;
     }
 
-    @Override
+    // @Override
     public EligibilityResult evaluateEligibility(Long loanRequestId) {
         resultRepo.findByLoanRequestId(loanRequestId).ifPresent(r -> {
             throw new BadRequestException("Eligibility already evaluated");
@@ -59,7 +59,7 @@ public class LoanEligibilityServiceImpl implements LoanEligibilityService {
         return resultRepo.save(result);
     }
 
-    @Override
+    // @Override
     public EligibilityResult getByLoanRequestId(Long loanRequestId) {
         return resultRepo.findByLoanRequestId(loanRequestId)
                 .orElseThrow(() -> new ResourceNotFoundException("Eligibility result not found"));
