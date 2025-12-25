@@ -43,25 +43,15 @@
 
 package com.example.demo.service.impl;
 
-// import java.util.List;
-// import org.springframework.beans.factory.annotation.Autowired;
-// import org.springframework.stereotype.Service;   
-// import com.example.demo.entity.EligibilityResult;
-// import com.example.demo.repository.EligibilityResultRepository;
-// import org.springframework.web.bind.annotation.PathVariable;
-// import com.example.demo.service.LoanEligibilityService;                
+ import java.util.List;
+ import org.springframework.beans.factory.annotation.Autowired;
+ import org.springframework.stereotype.Service;   
+ import com.example.demo.entity.EligibilityResult;
+ import com.example.demo.repository.EligibilityResultRepository;
+ import org.springframework.web.bind.annotation.PathVariable;
+ import com.example.demo.service.LoanEligibilityService;                
 
-// @Service
-
-
-
-
-
-
-
-
-
-
+ @Service
 public class LoanEligibilityServiceImpl {
 
     private final LoanRequestRepository loanRepo;

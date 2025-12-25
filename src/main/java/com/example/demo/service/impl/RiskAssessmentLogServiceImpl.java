@@ -41,11 +41,24 @@
 
 
 
+
+ package com.example.demo.service.impl;
+
+ import java.util.List;
+ import org.springframework.beans.factory.annotation.Autowired;
+ import org.springframework.stereotype.Service;   
+ import com.example.demo.entity.RiskAssessmentLog;
+ import com.example.demo.repository.RiskAssessmentLogRepository;
+ import org.springframework.web.bind.annotation.PathVariable;
+ import com.example.demo.service.RiskAssessmentLogService;                
+
+ @Service
+
 public class RiskAssessmentLogServiceImpl {
 
     private final LoanRequestRepository loanRepo;
     private final FinancialProfileRepository fpRepo;
-    private final RiskAssessmentRepository raRepo;
+    private final RiskAssessmentLogRepository raRepo;
 
     public RiskAssessmentLogServiceImpl(LoanRequestRepository l,
                                      FinancialProfileRepository f,
@@ -53,7 +66,7 @@ public class RiskAssessmentLogServiceImpl {
         loanRepo = l; fpRepo = f; raRepo = r;
     }
 
-    public RiskAssessment assessRisk(Long loanId) {
+    public RiskAssessmentLog assessRisk(Long loanId) {
 
         if (raRepo.findByLoanRequestId(loanId).isPresent())
             throw new BadRequestException("Risk already assessed");
@@ -64,7 +77,7 @@ public class RiskAssessmentLogServiceImpl {
         FinancialProfile fp = fpRepo.findByUserId(lr.getUser().getId())
                 .orElseThrow(() -> new ResourceNotFoundException("Financial profile not found"));
 
-        RiskAssessment ra = new RiskAssessment();
+        RiskAssessmentLog ra = new RiskAssessmentLog();
         ra.setLoanRequestId(loanId);
 
         double income = fp.getMonthlyIncome();
@@ -75,7 +88,7 @@ public class RiskAssessmentLogServiceImpl {
         return raRepo.save(ra);
     }
 
-    public RiskAssessment getByLoanRequestId(Long id) {
+    public RiskAssessmentLog getByLoanRequestId(Long id) {
         return raRepo.findByLoanRequestId(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Risk not found"));
     }
