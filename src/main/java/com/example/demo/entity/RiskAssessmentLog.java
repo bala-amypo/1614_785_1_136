@@ -83,14 +83,85 @@
 
 
 
+// package com.example.demo.entity;
+
+// import jakarta.persistence.Entity;
+// import jakarta.persistence.GeneratedValue;
+// import jakarta.persistence.GenerationType;
+// import jakarta.persistence.Id;
+// import jakarta.persistence.PrePersist;
+
+// import java.time.LocalDateTime;
+
+// @Entity
+// public class RiskAssessmentLog {
+
+//     @Id
+//     @GeneratedValue(strategy = GenerationType.IDENTITY)
+//     private Long id;
+
+//     private Long loanRequestId;
+
+//     private Double dtiRatio;
+
+//     private Double riskScore;
+
+//     private LocalDateTime timestamp;
+
+//     @PrePersist
+//     void onCreate() {
+//         timestamp = LocalDateTime.now();
+//     }
+
+//     // getters and setters
+//     public Long getId() {
+//         return id;
+//     }
+
+//     public void setId(Long id) {
+//         this.id = id;
+//     }
+
+//     public Long getLoanRequestId() {
+//         return loanRequestId;
+//     }
+
+//     public void setLoanRequestId(Long loanRequestId) {
+//         this.loanRequestId = loanRequestId;
+//     }
+
+//     public Double getDtiRatio() {
+//         return dtiRatio;
+//     }
+
+//     public void setDtiRatio(Double dtiRatio) {
+//         this.dtiRatio = dtiRatio;
+//     }
+
+//     public Double getRiskScore() {
+//         return riskScore;
+//     }
+
+//     public void setRiskScore(Double riskScore) {
+//         this.riskScore = riskScore;
+//     }
+
+//     public LocalDateTime getTimestamp() {
+//         return timestamp;
+//     }
+// }
+
+
+
+
+
+
+
+
+
 package com.example.demo.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.PrePersist;
-
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
@@ -101,11 +172,8 @@ public class RiskAssessmentLog {
     private Long id;
 
     private Long loanRequestId;
-
-    private Double dtiRatio;
-
-    private Double riskScore;
-
+    private double dtiRatio;
+    private double riskScore;
     private LocalDateTime timestamp;
 
     @PrePersist
@@ -113,40 +181,18 @@ public class RiskAssessmentLog {
         timestamp = LocalDateTime.now();
     }
 
-    // getters and setters
-    public Long getId() {
-        return id;
-    }
+    // Getters and Setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public Long getLoanRequestId() { return loanRequestId; }
+    public void setLoanRequestId(Long loanRequestId) { this.loanRequestId = loanRequestId; }
 
-    public Long getLoanRequestId() {
-        return loanRequestId;
-    }
+    public double getDtiRatio() { return dtiRatio; }
+    public void setDtiRatio(double dtiRatio) { this.dtiRatio = dtiRatio; }
 
-    public void setLoanRequestId(Long loanRequestId) {
-        this.loanRequestId = loanRequestId;
-    }
+    public double getRiskScore() { return riskScore; }
+    public void setRiskScore(double riskScore) { this.riskScore = riskScore; }
 
-    public Double getDtiRatio() {
-        return dtiRatio;
-    }
-
-    public void setDtiRatio(Double dtiRatio) {
-        this.dtiRatio = dtiRatio;
-    }
-
-    public Double getRiskScore() {
-        return riskScore;
-    }
-
-    public void setRiskScore(Double riskScore) {
-        this.riskScore = riskScore;
-    }
-
-    public LocalDateTime getTimestamp() {
-        return timestamp;
-    }
+    public LocalDateTime getTimestamp() { return timestamp; }
 }
