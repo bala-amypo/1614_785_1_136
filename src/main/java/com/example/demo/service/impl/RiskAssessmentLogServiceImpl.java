@@ -167,6 +167,76 @@
 
 
 
+// package com.example.demo.service.impl;
+
+// import com.example.demo.entity.FinancialProfile;
+// import com.example.demo.entity.LoanRequest;
+// import com.example.demo.entity.RiskAssessmentLog;
+// import com.example.demo.exception.BadRequestException;
+// import com.example.demo.exception.ResourceNotFoundException;
+// import com.example.demo.repository.FinancialProfileRepository;
+// import com.example.demo.repository.LoanRequestRepository;
+// import com.example.demo.repository.RiskAssessmentLogRepository;
+
+// public class RiskAssessmentLogServiceImpl {
+
+//     private final LoanRequestRepository loanRepo;
+//     private final FinancialProfileRepository profileRepo;
+//     private final RiskAssessmentLogRepository riskRepo;
+
+//     public RiskAssessmentLogServiceImpl(
+//             LoanRequestRepository loanRepo,
+//             FinancialProfileRepository profileRepo,
+//             RiskAssessmentLogRepository riskRepo) {
+
+//         this.loanRepo = loanRepo;
+//         this.profileRepo = profileRepo;
+//         this.riskRepo = riskRepo;
+//     }
+
+//     public RiskAssessmentLog assessRisk(Long loanRequestId) {
+
+//         if (riskRepo.findByLoanRequestId(loanRequestId).isPresent()) {
+//             throw new BadRequestException("Risk already assessed");
+//         }
+
+//         LoanRequest loan = loanRepo.findById(loanRequestId)
+//                 .orElseThrow(() ->
+//                         new ResourceNotFoundException("Loan request not found"));
+
+//         FinancialProfile profile = profileRepo
+//                 .findByUserId(loan.getUser().getId())
+//                 .orElseThrow(() ->
+//                         new ResourceNotFoundException("Financial profile not found"));
+
+//         RiskAssessmentLog ra = new RiskAssessmentLog();
+//         ra.setLoanRequestId(loanRequestId);
+
+//         double income = profile.getMonthlyIncome();
+//         double obligations =
+//                 profile.getMonthlyExpenses() + profile.getExistingLoanEmi();
+
+//         ra.setDtiRatio(income == 0 ? 0.0 : obligations / income);
+//         ra.setRiskScore(Math.min(100.0, ra.getDtiRatio() * 100));
+
+//         return riskRepo.save(ra);
+//     }
+
+//     public RiskAssessmentLog getByLoanRequestId(Long loanRequestId) {
+//         return riskRepo.findByLoanRequestId(loanRequestId)
+//                 .orElseThrow(() ->
+//                         new ResourceNotFoundException("Risk not found"));
+//     }
+// }
+
+
+
+
+
+
+
+
+
 package com.example.demo.service.impl;
 
 import com.example.demo.entity.FinancialProfile;
@@ -178,6 +248,11 @@ import com.example.demo.repository.FinancialProfileRepository;
 import com.example.demo.repository.LoanRequestRepository;
 import com.example.demo.repository.RiskAssessmentLogRepository;
 
+import java.util.Optional;
+
+import org.springframework.stereotype.Service;
+
+@Service
 public class RiskAssessmentLogServiceImpl {
 
     private final LoanRequestRepository loanRepo;
@@ -196,25 +271,23 @@ public class RiskAssessmentLogServiceImpl {
 
     public RiskAssessmentLog assessRisk(Long loanRequestId) {
 
-        if (riskRepo.findByLoanRequestId(loanRequestId).isPresent()) {
+        Optional<RiskAssessmentLog> existingRisk = riskRepo.findByLoanRequestId(loanRequestId);
+        if (existingRisk.isPresent()) {
             throw new BadRequestException("Risk already assessed");
         }
 
         LoanRequest loan = loanRepo.findById(loanRequestId)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException("Loan request not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Loan request not found"));
 
         FinancialProfile profile = profileRepo
                 .findByUserId(loan.getUser().getId())
-                .orElseThrow(() ->
-                        new ResourceNotFoundException("Financial profile not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Financial profile not found"));
 
         RiskAssessmentLog ra = new RiskAssessmentLog();
         ra.setLoanRequestId(loanRequestId);
 
         double income = profile.getMonthlyIncome();
-        double obligations =
-                profile.getMonthlyExpenses() + profile.getExistingLoanEmi();
+        double obligations = profile.getMonthlyExpenses() + profile.getExistingLoanEmi();
 
         ra.setDtiRatio(income == 0 ? 0.0 : obligations / income);
         ra.setRiskScore(Math.min(100.0, ra.getDtiRatio() * 100));
@@ -224,7 +297,6 @@ public class RiskAssessmentLogServiceImpl {
 
     public RiskAssessmentLog getByLoanRequestId(Long loanRequestId) {
         return riskRepo.findByLoanRequestId(loanRequestId)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException("Risk not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Risk not found"));
     }
 }
