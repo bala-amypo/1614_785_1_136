@@ -42,43 +42,93 @@
 
 
 
+// package com.example.demo.service.impl;
+
+//  import java.util.List;
+//  import org.springframework.beans.factory.annotation.Autowired;
+//  import org.springframework.stereotype.Service;   
+//  import com.example.demo.entity.LoanRequest;
+//  import com.example.demo.repository.LoanRequestRepository;
+//  import org.springframework.web.bind.annotation.PathVariable;
+//  import com.example.demo.service.LoanRequestService;                
+
+//  @Service
+// public class LoanRequestServiceImpl {
+
+//     private final LoanRequestRepository repo;
+//     private final UserRepository userRepo;
+
+//     public LoanRequestServiceImpl(LoanRequestRepository r, UserRepository u) {
+//         repo = r; userRepo = u;
+//     }
+
+//     public LoanRequest submitRequest(LoanRequest lr) {
+//         if (lr.getRequestedAmount() <= 0)
+//             throw new BadRequestException("Requested amount");
+
+//         userRepo.findById(lr.getUser().getId())
+//                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+//         lr.setStatus(LoanRequest.Status.PENDING.name());
+//         return repo.save(lr);
+//     }
+
+//     public LoanRequest getById(Long id) {
+//         return repo.findById(id)
+//                 .orElseThrow(() -> new ResourceNotFoundException("Loan request not found"));
+//     }
+
+//     public List<LoanRequest> getRequestsByUser(Long uid) {
+//         return repo.findByUserId(uid);
+//     }
+// }
+
+
+
+
+
 package com.example.demo.service.impl;
 
- import java.util.List;
- import org.springframework.beans.factory.annotation.Autowired;
- import org.springframework.stereotype.Service;   
- import com.example.demo.entity.LoanRequest;
- import com.example.demo.repository.LoanRequestRepository;
- import org.springframework.web.bind.annotation.PathVariable;
- import com.example.demo.service.LoanRequestService;                
+import com.example.demo.entity.LoanRequest;
+import com.example.demo.exception.BadRequestException;
+import com.example.demo.exception.ResourceNotFoundException;
+import com.example.demo.repository.LoanRequestRepository;
+import com.example.demo.repository.UserRepository;
 
- @Service
+import java.util.List;
+
 public class LoanRequestServiceImpl {
 
-    private final LoanRequestRepository repo;
-    private final UserRepository userRepo;
+    private final LoanRequestRepository repository;
+    private final UserRepository userRepository;
 
-    public LoanRequestServiceImpl(LoanRequestRepository r, UserRepository u) {
-        repo = r; userRepo = u;
+    public LoanRequestServiceImpl(LoanRequestRepository repository,
+                                  UserRepository userRepository) {
+        this.repository = repository;
+        this.userRepository = userRepository;
     }
 
-    public LoanRequest submitRequest(LoanRequest lr) {
-        if (lr.getRequestedAmount() <= 0)
+    public LoanRequest submitRequest(LoanRequest request) {
+
+        if (request.getRequestedAmount() <= 0) {
             throw new BadRequestException("Requested amount");
+        }
 
-        userRepo.findById(lr.getUser().getId())
-                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        userRepository.findById(request.getUser().getId())
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("User not found"));
 
-        lr.setStatus(LoanRequest.Status.PENDING.name());
-        return repo.save(lr);
+        request.setStatus(LoanRequest.Status.PENDING.name());
+        return repository.save(request);
     }
 
     public LoanRequest getById(Long id) {
-        return repo.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Loan request not found"));
+        return repository.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Loan request not found"));
     }
 
-    public List<LoanRequest> getRequestsByUser(Long uid) {
-        return repo.findByUserId(uid);
+    public List<LoanRequest> getRequestsByUser(Long userId) {
+        return repository.findByUserId(userId);
     }
 }

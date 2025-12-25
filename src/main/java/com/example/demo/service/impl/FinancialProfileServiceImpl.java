@@ -41,44 +41,99 @@
 
 
 
+// package com.example.demo.service.impl;
+
+//  import java.util.List;
+//  import org.springframework.beans.factory.annotation.Autowired;
+//  import org.springframework.stereotype.Service;   
+//  import com.example.demo.entity.FinancialProfile;
+//  import com.example.demo.repository.FinancialProfileRepository;
+//  import org.springframework.web.bind.annotation.PathVariable;
+//  import com.example.demo.service.FinancialProfileService;                
+
+//  @Service
+
+// public class FinancialProfileServiceImpl {
+
+//     private final FinancialProfileRepository repo;
+//     private final UserRepository userRepo;
+
+//     public FinancialProfileServiceImpl(FinancialProfileRepository r, UserRepository u) {
+//         repo = r; userRepo = u;
+//     }
+
+//     public FinancialProfile createOrUpdate(FinancialProfile fp) {
+//         if (fp.getCreditScore() < 300 || fp.getCreditScore() > 900)
+//             throw new BadRequestException("creditScore");
+
+//         Long uid = fp.getUser().getId();
+//         userRepo.findById(uid)
+//                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+//         Optional<FinancialProfile> existing = repo.findByUserId(uid);
+//         if (existing.isPresent()) {
+//             fp.setId(existing.get().getId());
+//         }
+//         return repo.save(fp);
+//     }
+
+//     public FinancialProfile getByUserId(Long uid) {
+//         return repo.findByUserId(uid)
+//                 .orElseThrow(() -> new ResourceNotFoundException("Financial profile not found"));
+//     }
+// }
+
+
+
+
 package com.example.demo.service.impl;
 
- import java.util.List;
- import org.springframework.beans.factory.annotation.Autowired;
- import org.springframework.stereotype.Service;   
- import com.example.demo.entity.FinancialProfile;
- import com.example.demo.repository.FinancialProfileRepository;
- import org.springframework.web.bind.annotation.PathVariable;
- import com.example.demo.service.FinancialProfileService;                
+import com.example.demo.entity.FinancialProfile;
+import com.example.demo.entity.User;
+import com.example.demo.exception.BadRequestException;
+import com.example.demo.exception.ResourceNotFoundException;
+import com.example.demo.repository.FinancialProfileRepository;
+import com.example.demo.repository.UserRepository;
 
- @Service
+import java.util.Optional;
 
 public class FinancialProfileServiceImpl {
 
-    private final FinancialProfileRepository repo;
-    private final UserRepository userRepo;
+    private final FinancialProfileRepository repository;
+    private final UserRepository userRepository;
 
-    public FinancialProfileServiceImpl(FinancialProfileRepository r, UserRepository u) {
-        repo = r; userRepo = u;
+    public FinancialProfileServiceImpl(FinancialProfileRepository repository,
+                                       UserRepository userRepository) {
+        this.repository = repository;
+        this.userRepository = userRepository;
     }
 
-    public FinancialProfile createOrUpdate(FinancialProfile fp) {
-        if (fp.getCreditScore() < 300 || fp.getCreditScore() > 900)
+    public FinancialProfile createOrUpdate(FinancialProfile profile) {
+
+        if (profile.getCreditScore() < 300 || profile.getCreditScore() > 900) {
             throw new BadRequestException("creditScore");
-
-        Long uid = fp.getUser().getId();
-        userRepo.findById(uid)
-                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
-
-        Optional<FinancialProfile> existing = repo.findByUserId(uid);
-        if (existing.isPresent()) {
-            fp.setId(existing.get().getId());
         }
-        return repo.save(fp);
+
+        Long userId = profile.getUser().getId();
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("User not found"));
+
+        Optional<FinancialProfile> existing =
+                repository.findByUserId(userId);
+
+        if (existing.isPresent()) {
+            profile.setId(existing.get().getId());
+        }
+
+        profile.setUser(user);
+        return repository.save(profile);
     }
 
-    public FinancialProfile getByUserId(Long uid) {
-        return repo.findByUserId(uid)
-                .orElseThrow(() -> new ResourceNotFoundException("Financial profile not found"));
+    public FinancialProfile getByUserId(Long userId) {
+        return repository.findByUserId(userId)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Financial profile not found"));
     }
 }
