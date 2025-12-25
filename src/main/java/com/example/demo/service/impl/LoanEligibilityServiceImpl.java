@@ -171,9 +171,9 @@ public class LoanEligibilityServiceImpl implements LoanEligibilityService {
 
     // 5️⃣ DELETE (THIS FIXES YOUR ERROR)
     @Override
-    public EligibilityResult DeleteData2(Long loanRequestId) {
+    public EligibilityResult DeleteData2(Long id) {
 
-        EligibilityResult existing = resultRepo.findByLoanRequestId(loanRequestId)
+        EligibilityResult existing = resultRepo.findByLoanRequestId(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Eligibility result not found"));
 
         resultRepo.delete(existing);
