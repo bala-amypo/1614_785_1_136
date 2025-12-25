@@ -233,7 +233,6 @@
 
 
 
-
 package com.example.demo.service.impl;
 
 import com.example.demo.entity.EligibilityResult;
@@ -244,13 +243,12 @@ import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repository.EligibilityResultRepository;
 import com.example.demo.repository.FinancialProfileRepository;
 import com.example.demo.repository.LoanRequestRepository;
+import com.example.demo.service.LoanEligibilityService;
 
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
-@Service
-public class LoanEligibilityServiceImpl {
+@Service // <-- make this a Spring bean
+public class LoanEligibilityServiceImpl implements LoanEligibilityService {
 
     private final LoanRequestRepository loanRepo;
     private final FinancialProfileRepository profileRepo;
@@ -264,24 +262,25 @@ public class LoanEligibilityServiceImpl {
         this.resultRepo = resultRepo;
     }
 
+    @Override
     public EligibilityResult evaluateEligibility(Long loanRequestId) {
-
-        Optional<EligibilityResult> existingResult = resultRepo.findByLoanRequestId(loanRequestId);
-        if (existingResult.isPresent()) {
+        // Check if eligibility already exists
+        resultRepo.findByLoanRequestId(loanRequestId).ifPresent(r -> {
             throw new BadRequestException("Eligibility already evaluated");
-        }
+        });
 
+        // Fetch loan request
         LoanRequest loan = loanRepo.findById(loanRequestId)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException("Loan request not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Loan request not found"));
 
+        // Fetch financial profile
         FinancialProfile profile = profileRepo.findByUserId(loan.getUser().getId())
-                .orElseThrow(() ->
-                        new ResourceNotFoundException("Financial profile not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Financial profile not found"));
 
+        // Calculate eligibility
         EligibilityResult result = new EligibilityResult();
         result.setLoanRequest(loan);
-        result.setIsEligible(true);
+        result.setIsEligible(true); // example logic, you can change
         result.setRiskLevel("LOW");
         result.setMaxEligibleAmount(Math.max(0, profile.getMonthlyIncome() * 10));
         result.setEstimatedEmi(result.getMaxEligibleAmount() / loan.getTenureMonths());
@@ -289,9 +288,9 @@ public class LoanEligibilityServiceImpl {
         return resultRepo.save(result);
     }
 
+    @Override
     public EligibilityResult getByLoanRequestId(Long loanRequestId) {
         return resultRepo.findByLoanRequestId(loanRequestId)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException("Eligibility result not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Eligibility result not found"));
     }
 }
