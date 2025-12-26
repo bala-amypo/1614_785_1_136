@@ -1,42 +1,92 @@
+// package com.example.demo.controller;
+
+// import java.util.*;
+// import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.web.bind.annotation.PostMapping;
+// import org.springframework.web.bind.annotation.GetMapping;
+// import org.springframework.web.bind.annotation.DeleteMapping;
+// import org.springframework.web.bind.annotation.PutMapping;
+// import org.springframework.web.bind.annotation.RequestBody;
+// import org.springframework.web.bind.annotation.RestController;
+// import org.springframework.web.bind.annotation.PathVariable;
+// import org.springframework.web.bind.annotation.RequestMapping;
+// import com.example.demo.entity.EligibilityResult;
+// // import com.example.demo.service.UserService;
+// import com.example.demo.service.EligibilityService;
+// import jakarta.validation.Valid;
+
+// @RestController
+// @RequestMapping("/EligibilityResult")
+// public class EligibilityController{
+//     @Autowired  LoanEligibilityService ser;
+//     @PostMapping("/register")
+//     public EligibilityResult sendData(@RequestBody EligibilityResult stu){
+//         return ser.postData2(stu);
+//     }
+//     @GetMapping("/get")
+//     public List<EligibilityResult> getval(){
+//         return ser.getAllData2();
+//     }
+//     @DeleteMapping("/delete/{id}")
+//     public String del(@PathVariable Long id){
+//         return ser.DeleteData2(id);
+//     }
+//     @GetMapping("/find/{id}")
+//     public EligibilityResult find(@PathVariable Long id){
+//         return ser.getData2(id);
+//     }
+//     @PutMapping("/put/{id}")
+//     public EligibilityResult putval(@PathVariable Long id,@RequestBody EligibilityResult entity){
+//         return ser.updateData2(id,entity);
+//     }
+// }
+
+
+
+
+
+
+
+
+
 package com.example.demo.controller;
 
-import java.util.*;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import com.example.demo.entity.EligibilityResult;
-// import com.example.demo.service.UserService;
-import com.example.demo.service.LoanEligibilityService;
+import com.example.demo.service.EligibilityService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/EligibilityResult")
-public class EligibilityController{
-    @Autowired  LoanEligibilityService ser;
+@RequestMapping("/eligibility")
+public class EligibilityController {
+
+    @Autowired  
+    private EligibilityService service;
+
     @PostMapping("/register")
-    public EligibilityResult sendData(@RequestBody EligibilityResult stu){
-        return ser.postData2(stu);
+    public EligibilityResult createEligibility(@RequestBody @Valid EligibilityResult eligibility) {
+        return service.postData2(eligibility);
     }
+
     @GetMapping("/get")
-    public List<EligibilityResult> getval(){
-        return ser.getAllData2();
+    public List<EligibilityResult> getAllEligibilities() {
+        return service.getAllData2();
     }
+
     @DeleteMapping("/delete/{id}")
-    public String del(@PathVariable Long id){
-        return ser.DeleteData2(id);
+    public String deleteEligibility(@PathVariable Long id) {
+        return service.deleteData2(id);
     }
+
     @GetMapping("/find/{id}")
-    public EligibilityResult find(@PathVariable Long id){
-        return ser.getData2(id);
+    public EligibilityResult getEligibility(@PathVariable Long id) {
+        return service.getData2(id);
     }
+
     @PutMapping("/put/{id}")
-    public EligibilityResult putval(@PathVariable Long id,@RequestBody EligibilityResult entity){
-        return ser.updateData2(id,entity);
+    public EligibilityResult updateEligibility(@PathVariable Long id, @RequestBody @Valid EligibilityResult entity) {
+        return service.updateData2(id, entity);
     }
 }
