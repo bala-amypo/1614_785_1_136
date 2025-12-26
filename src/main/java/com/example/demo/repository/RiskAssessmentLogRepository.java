@@ -52,6 +52,5 @@ import java.util.Optional;
 
 public interface RiskAssessmentLogRepository
         extends JpaRepository<RiskAssessmentLog, Long> {
-
     Optional<RiskAssessmentLog> findByLoanRequestId(Long loanRequestId);
 }
