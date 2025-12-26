@@ -231,12 +231,49 @@
 
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+// import jakarta.persistence.Entity;
+// import jakarta.persistence.GeneratedValue;
+// import jakarta.persistence.GenerationType;
+// import jakarta.persistence.Id;
+// import jakarta.persistence.JoinColumn;
+// import jakarta.persistence.OneToOne;
+
+// @Entity
+// public class FinancialProfile {
+
+//     @Id
+//     @GeneratedValue(strategy = GenerationType.IDENTITY)
+//     private Long id;
+
+//     private Double income;
+//     private Double expenses;
+//     private Integer creditScore;
+
+//     @OneToOne
+//     @JoinColumn(name = "user_id")
+//     private User user;
+
+//     // getters and setters
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+package com.example.demo.entity;
+
+import jakarta.persistence.*;
 
 @Entity
 public class FinancialProfile {
@@ -245,13 +282,42 @@ public class FinancialProfile {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Double income;
-    private Double expenses;
-    private Integer creditScore;
+    private double income;
+    private double expenses;
+    private int creditScore;
 
     @OneToOne
-    @JoinColumn(name = "user_id")
     private User user;
 
-    // getters and setters
+    public double getIncome() {
+        return income;
+    }
+
+    public double getExpenses() {
+        return expenses;
+    }
+
+    public int getCreditScore() {
+        return creditScore;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setIncome(double income) {
+        this.income = income;
+    }
+
+    public void setExpenses(double expenses) {
+        this.expenses = expenses;
+    }
+
+    public void setCreditScore(int creditScore) {
+        this.creditScore = creditScore;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 }

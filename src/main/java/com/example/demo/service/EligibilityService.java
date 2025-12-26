@@ -45,9 +45,9 @@
 
 
 
-public interface EligibilityService {
+// public interface EligibilityService {
 
-    EligibilityResult evaluateEligibility(Long requestId);
+//     EligibilityResult evaluateEligibility(Long requestId);
 
-    EligibilityResult getEligibilityByRequest(Long requestId);
-}
+//     EligibilityResult getEligibilityByRequest(Long requestId);
+// }

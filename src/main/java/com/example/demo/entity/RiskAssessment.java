@@ -253,11 +253,47 @@
 
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+// import jakarta.persistence.Entity;
+// import jakarta.persistence.GeneratedValue;
+// import jakarta.persistence.GenerationType;
+// import jakarta.persistence.Id;
+// import jakarta.persistence.ManyToOne;
+// import java.time.LocalDateTime;
+
+// @Entity
+// public class RiskAssessment {
+
+//     @Id
+//     @GeneratedValue(strategy = GenerationType.IDENTITY)
+//     private Long id;
+
+//     private String message;
+//     private LocalDateTime timestamp;
+
+//     @ManyToOne
+//     private LoanRequest loanRequest;
+
+//     // getters and setters
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+package com.example.demo.entity;
+
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
@@ -267,11 +303,26 @@ public class RiskAssessment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String riskLevel;
     private String message;
     private LocalDateTime timestamp;
 
     @ManyToOne
-    private LoanRequest loanRequest;
+    private Request request;
 
-    // getters and setters
+    public void setRiskLevel(String riskLevel) {
+        this.riskLevel = riskLevel;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public void setTimestamp(LocalDateTime timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public void setRequest(Request request) {
+        this.request = request;
+    }
 }

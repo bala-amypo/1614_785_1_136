@@ -147,11 +147,44 @@
 
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+// import jakarta.persistence.Entity;
+// import jakarta.persistence.GeneratedValue;
+// import jakarta.persistence.GenerationType;
+// import jakarta.persistence.Id;
+// import jakarta.persistence.OneToOne;
+
+// @Entity
+// public class EligibilityResult {
+
+//     @Id
+//     @GeneratedValue(strategy = GenerationType.IDENTITY)
+//     private Long id;
+
+//     private String riskLevel;
+//     private Double dti;
+//     private Boolean eligible;
+
+//     @OneToOne
+//     private LoanRequest loanRequest;
+
+//     // getters and setters
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+package com.example.demo.entity;
+
+import jakarta.persistence.*;
 
 @Entity
 public class EligibilityResult {
@@ -160,12 +193,26 @@ public class EligibilityResult {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private double dti;
+    private boolean eligible;
     private String riskLevel;
-    private Double dti;
-    private Boolean eligible;
 
     @OneToOne
-    private LoanRequest loanRequest;
+    private Request request;
 
-    // getters and setters
+    public void setDti(double dti) {
+        this.dti = dti;
+    }
+
+    public void setEligible(boolean eligible) {
+        this.eligible = eligible;
+    }
+
+    public void setRiskLevel(String riskLevel) {
+        this.riskLevel = riskLevel;
+    }
+
+    public void setRequest(Request request) {
+        this.request = request;
+    }
 }
