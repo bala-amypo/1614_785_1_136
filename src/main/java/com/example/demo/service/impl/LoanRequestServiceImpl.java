@@ -108,15 +108,79 @@
 
 
 
-package com.example.demo.service.impl;
+// package com.example.demo.service.impl;
 
-import com.example.demo.entity.LoanRequest;
-import com.example.demo.repository.LoanRequestRepository;
-import com.example.demo.service.LoanRequestService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+// import com.example.demo.entity.LoanRequest;
+// import com.example.demo.repository.LoanRequestRepository;
+// import com.example.demo.service.LoanRequestService;
+// import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.stereotype.Service;
+
+// import java.util.List;
+
+// @Service
+// public class LoanRequestServiceImpl implements LoanRequestService {
+
+//     @Autowired
+//     private LoanRequestRepository repository;
+
+//     @Override
+//     public LoanRequest postData4(LoanRequest request) {
+//         return repository.save(request);
+//     }
+
+//     @Override
+//     public List<LoanRequest> getAllData4() {
+//         return repository.findAll();
+//     }
+
+//     @Override
+//     public String DeleteData4(Long id) {
+//         if (repository.existsById(id)) {
+//             repository.deleteById(id);
+//             return "Deleted successfully";
+//         }
+//         return "Not found with id: " + id;
+//     }
+
+//     @Override
+//     public LoanRequest getData4(Long id) {
+//         return repository.findById(id).orElse(null);
+//     }
+
+//     @Override
+//     public LoanRequest updateData4(Long id, LoanRequest entity) {
+//         return repository.findById(id).map(existing -> {
+//             // update fields accordingly
+//             return repository.save(existing);
+//         }).orElse(null);
+//     }
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class LoanRequestServiceImpl implements LoanRequestService {
@@ -125,34 +189,19 @@ public class LoanRequestServiceImpl implements LoanRequestService {
     private LoanRequestRepository repository;
 
     @Override
-    public LoanRequest postData4(LoanRequest request) {
+    public LoanRequest createLoanRequest(LoanRequest request) {
+        request.setStatus("SUBMITTED");
         return repository.save(request);
     }
 
     @Override
-    public List<LoanRequest> getAllData4() {
-        return repository.findAll();
+    public LoanRequest getLoanRequestById(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Loan request not found"));
     }
 
     @Override
-    public String DeleteData4(Long id) {
-        if (repository.existsById(id)) {
-            repository.deleteById(id);
-            return "Deleted successfully";
-        }
-        return "Not found with id: " + id;
-    }
-
-    @Override
-    public LoanRequest getData4(Long id) {
-        return repository.findById(id).orElse(null);
-    }
-
-    @Override
-    public LoanRequest updateData4(Long id, LoanRequest entity) {
-        return repository.findById(id).map(existing -> {
-            // update fields accordingly
-            return repository.save(existing);
-        }).orElse(null);
+    public List<LoanRequest> getLoanRequestsByUser(Long userId) {
+        return repository.findByUserId(userId);
     }
 }

@@ -34,20 +34,39 @@
 
 
 
-package com.example.demo.service;
+// package com.example.demo.service;
 
-import com.example.demo.entity.FinancialProfile;
-import java.util.List;
+// import com.example.demo.entity.FinancialProfile;
+// import java.util.List;
+
+// public interface FinancialProfileService {
+
+//     FinancialProfile postData3(FinancialProfile profile);
+
+//     List<FinancialProfile> getAllData3();
+
+//     String DeleteData3(Long id);
+
+//     FinancialProfile getData3(Long id);
+
+//     FinancialProfile updateData3(Long id, FinancialProfile entity);
+// }
+
+
+
+
+
+
+
+
+
+
+
+
 
 public interface FinancialProfileService {
 
-    FinancialProfile postData3(FinancialProfile profile);
+    FinancialProfile createOrUpdateProfile(FinancialProfile profile);
 
-    List<FinancialProfile> getAllData3();
-
-    String DeleteData3(Long id);
-
-    FinancialProfile getData3(Long id);
-
-    FinancialProfile updateData3(Long id, FinancialProfile entity);
+    FinancialProfile getProfileByUserId(Long userId);
 }

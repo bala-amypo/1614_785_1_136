@@ -120,15 +120,73 @@
 
 
 
-package com.example.demo.service.impl;
+// package com.example.demo.service.impl;
 
-import com.example.demo.entity.RiskAssessment;
-import com.example.demo.repository.RiskAssessmentRepository;
-import com.example.demo.service.RiskAssessmentService;
+// import com.example.demo.entity.RiskAssessment;
+// import com.example.demo.repository.RiskAssessmentRepository;
+// import com.example.demo.service.RiskAssessmentService;
+// import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.stereotype.Service;
+
+// import java.util.List;
+
+// @Service
+// public class RiskAssessmentServiceImpl implements RiskAssessmentService {
+
+//     @Autowired
+//     private RiskAssessmentRepository riskAssessmentRepository;
+
+//     @Override
+//     public RiskAssessment postData5(RiskAssessment use) {
+//         return riskAssessmentRepository.save(use);
+//     }
+
+//     @Override
+//     public List<RiskAssessment> getAllData5() {
+//         return riskAssessmentRepository.findAll();
+//     }
+
+//     @Override
+//     public String deleteData5(Long id) {
+//         if (riskAssessmentRepository.existsById(id)) {
+//             riskAssessmentRepository.deleteById(id);
+//             return "RiskAssessment deleted successfully";
+//         } else {
+//             return "RiskAssessment not found with id: " + id;
+//         }
+//     }
+
+//     @Override
+//     public RiskAssessment getData5(Long id) {
+//         return riskAssessmentRepository.findById(id).orElse(null);
+//     }
+
+//     @Override
+//     public RiskAssessment updateData5(Long id, RiskAssessment entity) {
+//         return riskAssessmentRepository.findById(id).map(existing -> {
+//             // Update only the fields that exist in RiskAssessment
+//             existing.setLoanRequestId(entity.getLoanRequestId());
+//             existing.setDtiRatio(entity.getDtiRatio());
+//             existing.setRiskScore(entity.getRiskScore());
+//             return riskAssessmentRepository.save(existing);
+//         }).orElse(null);
+//     }
+// }
+
+
+
+
+
+
+
+
+
+
+import java.time.LocalDateTime;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class RiskAssessmentServiceImpl implements RiskAssessmentService {
@@ -137,38 +195,13 @@ public class RiskAssessmentServiceImpl implements RiskAssessmentService {
     private RiskAssessmentRepository riskAssessmentRepository;
 
     @Override
-    public RiskAssessment postData5(RiskAssessment use) {
-        return riskAssessmentRepository.save(use);
+    public RiskAssessment saveAssessment(RiskAssessment assessment) {
+        assessment.setTimestamp(LocalDateTime.now());
+        return riskAssessmentRepository.save(assessment);
     }
 
     @Override
-    public List<RiskAssessment> getAllData5() {
-        return riskAssessmentRepository.findAll();
-    }
-
-    @Override
-    public String deleteData5(Long id) {
-        if (riskAssessmentRepository.existsById(id)) {
-            riskAssessmentRepository.deleteById(id);
-            return "RiskAssessment deleted successfully";
-        } else {
-            return "RiskAssessment not found with id: " + id;
-        }
-    }
-
-    @Override
-    public RiskAssessment getData5(Long id) {
-        return riskAssessmentRepository.findById(id).orElse(null);
-    }
-
-    @Override
-    public RiskAssessment updateData5(Long id, RiskAssessment entity) {
-        return riskAssessmentRepository.findById(id).map(existing -> {
-            // Update only the fields that exist in RiskAssessment
-            existing.setLoanRequestId(entity.getLoanRequestId());
-            existing.setDtiRatio(entity.getDtiRatio());
-            existing.setRiskScore(entity.getRiskScore());
-            return riskAssessmentRepository.save(existing);
-        }).orElse(null);
+    public List<RiskAssessment> getAssessmentsByLoanRequest(Long loanRequestId) {
+        return riskAssessmentRepository.findByLoanRequestId(loanRequestId);
     }
 }

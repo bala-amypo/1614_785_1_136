@@ -37,15 +37,32 @@
 
 
 
-package com.example.demo.service;
+// package com.example.demo.service;
 
-import com.example.demo.entity.LoanRequest;
+// import com.example.demo.entity.LoanRequest;
+// import java.util.List;
+
+// public interface LoanRequestService {
+//     LoanRequest postData4(LoanRequest request);
+//     List<LoanRequest> getAllData4();
+//     String DeleteData4(Long id);
+//     LoanRequest getData4(Long id);
+//     LoanRequest updateData4(Long id, LoanRequest entity);
+// }
+
+
+
+
+
+
+
 import java.util.List;
 
 public interface LoanRequestService {
-    LoanRequest postData4(LoanRequest request);
-    List<LoanRequest> getAllData4();
-    String DeleteData4(Long id);
-    LoanRequest getData4(Long id);
-    LoanRequest updateData4(Long id, LoanRequest entity);
+
+    LoanRequest createLoanRequest(LoanRequest request);
+
+    LoanRequest getLoanRequestById(Long id);
+
+    List<LoanRequest> getLoanRequestsByUser(Long userId);
 }
