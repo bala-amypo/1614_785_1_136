@@ -63,6 +63,51 @@
 
 
 
+// package com.example.demo.service.impl;
+
+// import com.example.demo.entity.LoanRequest;
+// import com.example.demo.repository.LoanRequestRepository;
+// import com.example.demo.service.LoanRequestService;
+// import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.stereotype.Service;
+
+// import java.util.List;
+
+// @Service
+// public class LoanRequestServiceImpl implements LoanRequestService {
+
+//     @Autowired
+//     private LoanRequestRepository repository;
+
+//     @Override
+//     public LoanRequest submitRequest(LoanRequest request) {
+//         return repository.save(request);
+//     }
+
+//     @Override
+//     public List<LoanRequest> getRequestsByUser(Long userId) {
+//         // Assuming your LoanRequest entity has a userId field, replace this with your query logic
+//         return repository.findByUserId(userId);
+//     }
+
+//     @Override
+//     public LoanRequest getById(Long id) {
+//         return repository.findById(id).orElse(null);
+//     }
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
 package com.example.demo.service.impl;
 
 import com.example.demo.entity.LoanRequest;
@@ -80,18 +125,34 @@ public class LoanRequestServiceImpl implements LoanRequestService {
     private LoanRequestRepository repository;
 
     @Override
-    public LoanRequest submitRequest(LoanRequest request) {
+    public LoanRequest postData4(LoanRequest request) {
         return repository.save(request);
     }
 
     @Override
-    public List<LoanRequest> getRequestsByUser(Long userId) {
-        // Assuming your LoanRequest entity has a userId field, replace this with your query logic
-        return repository.findByUserId(userId);
+    public List<LoanRequest> getAllData4() {
+        return repository.findAll();
     }
 
     @Override
-    public LoanRequest getById(Long id) {
+    public String DeleteData4(Long id) {
+        if (repository.existsById(id)) {
+            repository.deleteById(id);
+            return "Deleted successfully";
+        }
+        return "Not found with id: " + id;
+    }
+
+    @Override
+    public LoanRequest getData4(Long id) {
         return repository.findById(id).orElse(null);
+    }
+
+    @Override
+    public LoanRequest updateData4(Long id, LoanRequest entity) {
+        return repository.findById(id).map(existing -> {
+            // update fields accordingly
+            return repository.save(existing);
+        }).orElse(null);
     }
 }
