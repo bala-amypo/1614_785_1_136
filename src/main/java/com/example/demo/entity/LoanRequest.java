@@ -138,6 +138,57 @@
 
 
 
+// package com.example.demo.entity;
+
+// import jakarta.persistence.*;
+
+// @Entity
+// public class LoanRequest {
+
+//     public enum Status {
+//         PENDING, APPROVED, REJECTED
+//     }
+
+//     @Id
+//     @GeneratedValue(strategy = GenerationType.IDENTITY)
+//     private Long id;
+
+//     @ManyToOne
+//     private User user;
+
+//     private Double requestedAmount;
+//     private int tenureMonths;
+
+//     @Enumerated(EnumType.STRING)
+//     private Status status;
+
+//     // Getters and Setters
+//     public Long getId() { return id; }
+//     public void setId(Long id) { this.id = id; }
+
+//     public User getUser() { return user; }
+//     public void setUser(User user) { this.user = user; }
+
+//     public Double getRequestedAmount() { return requestedAmount; }
+//     public void setRequestedAmount(Double requestedAmount) { this.requestedAmount = requestedAmount; }
+
+//     public int getTenureMonths() { return tenureMonths; }
+//     public void setTenureMonths(int tenureMonths) { this.tenureMonths = tenureMonths; }
+
+//     public Status getStatus() { return status; }
+//     public void setStatus(Status status) { this.status = status; }
+// }
+
+
+
+
+
+
+
+
+
+
+
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
@@ -145,36 +196,18 @@ import jakarta.persistence.*;
 @Entity
 public class LoanRequest {
 
-    public enum Status {
-        PENDING, APPROVED, REJECTED
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    private User user;
+    // Add fields as needed
 
-    private Double requestedAmount;
-    private int tenureMonths;
+    // Getters and setters
+    public Long getId() {
+        return id;
+    }
 
-    @Enumerated(EnumType.STRING)
-    private Status status;
-
-    // Getters and Setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-
-    public User getUser() { return user; }
-    public void setUser(User user) { this.user = user; }
-
-    public Double getRequestedAmount() { return requestedAmount; }
-    public void setRequestedAmount(Double requestedAmount) { this.requestedAmount = requestedAmount; }
-
-    public int getTenureMonths() { return tenureMonths; }
-    public void setTenureMonths(int tenureMonths) { this.tenureMonths = tenureMonths; }
-
-    public Status getStatus() { return status; }
-    public void setStatus(Status status) { this.status = status; }
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

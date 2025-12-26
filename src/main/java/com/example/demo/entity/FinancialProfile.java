@@ -136,6 +136,57 @@
 
 
 
+// package com.example.demo.entity;
+
+// import jakarta.persistence.*;
+
+// @Entity
+// public class FinancialProfile {
+
+//     @Id
+//     @GeneratedValue(strategy = GenerationType.IDENTITY)
+//     private Long id;
+
+//     @OneToOne
+//     private User user;
+
+//     private Integer creditScore;  // Changed from int to Integer
+
+//     private Double monthlyIncome;
+//     private Double monthlyExpenses;
+//     private Double existingLoanEmi;
+
+//     // Getters and Setters
+//     public Long getId() { return id; }
+//     public void setId(Long id) { this.id = id; }
+
+//     public User getUser() { return user; }
+//     public void setUser(User user) { this.user = user; }
+
+//     public Integer getCreditScore() { return creditScore; }
+//     public void setCreditScore(Integer creditScore) { this.creditScore = creditScore; }
+
+//     public Double getMonthlyIncome() { return monthlyIncome; }
+//     public void setMonthlyIncome(Double monthlyIncome) { this.monthlyIncome = monthlyIncome; }
+
+//     public Double getMonthlyExpenses() { return monthlyExpenses; }
+//     public void setMonthlyExpenses(Double monthlyExpenses) { this.monthlyExpenses = monthlyExpenses; }
+
+//     public Double getExistingLoanEmi() { return existingLoanEmi; }
+//     public void setExistingLoanEmi(Double existingLoanEmi) { this.existingLoanEmi = existingLoanEmi; }
+// }
+
+
+
+
+
+
+
+
+
+
+
+
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
@@ -147,31 +198,25 @@ public class FinancialProfile {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
-    private User user;
+    private double savingsBalance;
 
-    private Integer creditScore;  // Changed from int to Integer
+    // Add other fields as needed
 
-    private Double monthlyIncome;
-    private Double monthlyExpenses;
-    private Double existingLoanEmi;
+    // Getters and setters
 
-    // Getters and Setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public Long getId() {
+        return id;
+    }
 
-    public User getUser() { return user; }
-    public void setUser(User user) { this.user = user; }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public Integer getCreditScore() { return creditScore; }
-    public void setCreditScore(Integer creditScore) { this.creditScore = creditScore; }
+    public double getSavingsBalance() {
+        return savingsBalance;
+    }
 
-    public Double getMonthlyIncome() { return monthlyIncome; }
-    public void setMonthlyIncome(Double monthlyIncome) { this.monthlyIncome = monthlyIncome; }
-
-    public Double getMonthlyExpenses() { return monthlyExpenses; }
-    public void setMonthlyExpenses(Double monthlyExpenses) { this.monthlyExpenses = monthlyExpenses; }
-
-    public Double getExistingLoanEmi() { return existingLoanEmi; }
-    public void setExistingLoanEmi(Double existingLoanEmi) { this.existingLoanEmi = existingLoanEmi; }
+    public void setSavingsBalance(double savingsBalance) {
+        this.savingsBalance = savingsBalance;
+    }
 }
