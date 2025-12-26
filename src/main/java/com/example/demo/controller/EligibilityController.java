@@ -49,44 +49,81 @@
 
 
 
-package com.example.demo.controller;
+// package com.example.demo.controller;
 
-import java.util.List;
+// import java.util.List;
+// import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.web.bind.annotation.*;
+// import com.example.demo.entity.EligibilityResult;
+// import com.example.demo.service.EligibilityService;
+// import jakarta.validation.Valid;
+
+// @RestController
+// @RequestMapping("/eligibility")
+// public class EligibilityController {
+
+//     @Autowired  
+//     private EligibilityService service;
+
+//     @PostMapping("/register")
+//     public EligibilityResult createEligibility(@RequestBody @Valid EligibilityResult eligibility) {
+//         return service.postData2(eligibility);
+//     }
+
+//     @GetMapping("/get")
+//     public List<EligibilityResult> getAllEligibilities() {
+//         return service.getAllData2();
+//     }
+
+//     @DeleteMapping("/delete/{id}")
+//     public String deleteEligibility(@PathVariable Long id) {
+//         return service.deleteData2(id);
+//     }
+
+//     @GetMapping("/find/{id}")
+//     public EligibilityResult getEligibility(@PathVariable Long id) {
+//         return service.getData2(id);
+//     }
+
+//     @PutMapping("/put/{id}")
+//     public EligibilityResult updateEligibility(@PathVariable Long id, @RequestBody @Valid EligibilityResult entity) {
+//         return service.updateData2(id, entity);
+//     }
+// }
+
+
+
+
+
+
+
+
+
+
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-import com.example.demo.entity.EligibilityResult;
-import com.example.demo.service.EligibilityService;
-import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/eligibility")
+@RequestMapping("/api/eligibility")
 public class EligibilityController {
 
-    @Autowired  
-    private EligibilityService service;
+    @Autowired
+    private EligibilityService eligibilityService;
 
-    @PostMapping("/register")
-    public EligibilityResult createEligibility(@RequestBody @Valid EligibilityResult eligibility) {
-        return service.postData2(eligibility);
+    @PostMapping("/evaluate/{requestId}")
+    public EligibilityResult evaluateEligibility(
+            @PathVariable Long requestId) {
+        return eligibilityService.evaluateEligibility(requestId);
     }
 
-    @GetMapping("/get")
-    public List<EligibilityResult> getAllEligibilities() {
-        return service.getAllData2();
-    }
-
-    @DeleteMapping("/delete/{id}")
-    public String deleteEligibility(@PathVariable Long id) {
-        return service.deleteData2(id);
-    }
-
-    @GetMapping("/find/{id}")
-    public EligibilityResult getEligibility(@PathVariable Long id) {
-        return service.getData2(id);
-    }
-
-    @PutMapping("/put/{id}")
-    public EligibilityResult updateEligibility(@PathVariable Long id, @RequestBody @Valid EligibilityResult entity) {
-        return service.updateData2(id, entity);
+    @GetMapping("/{requestId}")
+    public EligibilityResult getEligibility(
+            @PathVariable Long requestId) {
+        return eligibilityService.getEligibilityByRequest(requestId);
     }
 }

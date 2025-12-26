@@ -91,15 +91,74 @@
 
 
 
-package com.example.demo.service.impl;
+// package com.example.demo.service.impl;
 
-import com.example.demo.entity.FinancialProfile;
-import com.example.demo.repository.FinancialProfileRepository;
-import com.example.demo.service.FinancialProfileService;
+// import com.example.demo.entity.FinancialProfile;
+// import com.example.demo.repository.FinancialProfileRepository;
+// import com.example.demo.service.FinancialProfileService;
+// import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.stereotype.Service;
+
+// import java.util.List;
+
+// @Service
+// public class FinancialProfileServiceImpl implements FinancialProfileService {
+
+//     @Autowired
+//     private FinancialProfileRepository repository;
+
+//     @Override
+//     public FinancialProfile postData3(FinancialProfile profile) {
+//         return repository.save(profile);
+//     }
+
+//     @Override
+//     public List<FinancialProfile> getAllData3() {
+//         return repository.findAll();
+//     }
+
+//     @Override
+//     public String DeleteData3(Long id) {
+//         if (repository.existsById(id)) {
+//             repository.deleteById(id);
+//             return "Deleted successfully";
+//         }
+//         return "Not found with id: " + id;
+//     }
+
+//     @Override
+//     public FinancialProfile getData3(Long id) {
+//         return repository.findById(id).orElse(null);
+//     }
+
+//     @Override
+//     public FinancialProfile updateData3(Long id, FinancialProfile entity) {
+//         return repository.findById(id).map(existing -> {
+//             // Update fields accordingly, example:
+//             existing.setSavingsBalance(entity.getSavingsBalance());
+//             // update other fields if any
+//             return repository.save(existing);
+//         }).orElse(null);
+//     }
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class FinancialProfileServiceImpl implements FinancialProfileService {
@@ -108,36 +167,13 @@ public class FinancialProfileServiceImpl implements FinancialProfileService {
     private FinancialProfileRepository repository;
 
     @Override
-    public FinancialProfile postData3(FinancialProfile profile) {
+    public FinancialProfile createOrUpdateProfile(FinancialProfile profile) {
         return repository.save(profile);
     }
 
     @Override
-    public List<FinancialProfile> getAllData3() {
-        return repository.findAll();
-    }
-
-    @Override
-    public String DeleteData3(Long id) {
-        if (repository.existsById(id)) {
-            repository.deleteById(id);
-            return "Deleted successfully";
-        }
-        return "Not found with id: " + id;
-    }
-
-    @Override
-    public FinancialProfile getData3(Long id) {
-        return repository.findById(id).orElse(null);
-    }
-
-    @Override
-    public FinancialProfile updateData3(Long id, FinancialProfile entity) {
-        return repository.findById(id).map(existing -> {
-            // Update fields accordingly, example:
-            existing.setSavingsBalance(entity.getSavingsBalance());
-            // update other fields if any
-            return repository.save(existing);
-        }).orElse(null);
+    public FinancialProfile getProfileByUserId(Long userId) {
+        return repository.findByUserId(userId)
+                .orElseThrow(() -> new RuntimeException("Financial profile not found"));
     }
 }

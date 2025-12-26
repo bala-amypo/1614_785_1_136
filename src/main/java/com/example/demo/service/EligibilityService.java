@@ -17,23 +17,37 @@
 
 
 
-package com.example.demo.service;
+// package com.example.demo.service;
 
-import com.example.demo.entity.EligibilityResult;
-import java.util.List;
+// import com.example.demo.entity.EligibilityResult;
+// import java.util.List;
+
+// public interface EligibilityService {
+
+//     EligibilityResult postData2(EligibilityResult use);
+
+//     List<EligibilityResult> getAllData2();
+
+//     String deleteData2(Long id);
+
+//     EligibilityResult getData2(Long id);
+
+//     EligibilityResult updateData2(Long id, EligibilityResult entity);
+// }
+
+
+
+
+
+
+
+
+
+
 
 public interface EligibilityService {
 
-    EligibilityResult postData2(EligibilityResult use);
+    EligibilityResult evaluateEligibility(Long requestId);
 
-    List<EligibilityResult> getAllData2();
-
-    String deleteData2(Long id);
-
-    EligibilityResult getData2(Long id);
-
-    EligibilityResult updateData2(Long id, EligibilityResult entity);
+    EligibilityResult getEligibilityByRequest(Long requestId);
 }
-
-
-
