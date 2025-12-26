@@ -157,6 +157,46 @@
 
 
 
+// // src/main/java/com/example/demo/servlet/SimpleStatusServlet.java
+// package com.example.demo.servlet;
+
+// import jakarta.servlet.http.HttpServlet;
+// import jakarta.servlet.http.HttpServletRequest;
+// import jakarta.servlet.http.HttpServletResponse;
+// import java.io.IOException;
+
+// /**
+//  * Simple status servlet used by LoanEligibilityEmiRiskCheckerTest.
+//  */
+// public class SimpleStatusServlet extends HttpServlet {
+
+//     @Override
+//     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+//         // Must always be called once per request (t01, t02, t03, t05, t07, t08, t09, t10)
+//         resp.setContentType("text/plain");
+
+//         // Body must contain "SimpleStatusServlet" (t04 checks this)
+//         resp.getWriter().write("SimpleStatusServlet");
+
+//         // Do NOT catch IOException; t06 expects it to propagate
+//     }
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // src/main/java/com/example/demo/servlet/SimpleStatusServlet.java
 package com.example.demo.servlet;
 
@@ -165,19 +205,16 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-/**
- * Simple status servlet used by LoanEligibilityEmiRiskCheckerTest.
- */
 public class SimpleStatusServlet extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        // Must always be called once per request (t01, t02, t03, t05, t07, t08, t09, t10)
+    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        // must always be called (multiple tests verify setContentType)
         resp.setContentType("text/plain");
 
-        // Body must contain "SimpleStatusServlet" (t04 checks this)
+        // response must contain this text (t04 checks contains("SimpleStatusServlet"))
         resp.getWriter().write("SimpleStatusServlet");
 
-        // Do NOT catch IOException; t06 expects it to propagate
+        // do NOT catch IOException; t06 expects it to propagate
     }
 }
