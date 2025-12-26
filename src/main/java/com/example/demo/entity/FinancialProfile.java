@@ -187,9 +187,56 @@
 
 
 
-package com.example.demo.entity;
+// package com.example.demo.entity;
 
-import jakarta.persistence.*;
+// import jakarta.persistence.*;
+
+// @Entity
+// public class FinancialProfile {
+
+//     @Id
+//     @GeneratedValue(strategy = GenerationType.IDENTITY)
+//     private Long id;
+
+//     private double savingsBalance;
+
+//     // Add other fields as needed
+
+//     // Getters and setters
+
+//     public Long getId() {
+//         return id;
+//     }
+
+//     public void setId(Long id) {
+//         this.id = id;
+//     }
+
+//     public double getSavingsBalance() {
+//         return savingsBalance;
+//     }
+
+//     public void setSavingsBalance(double savingsBalance) {
+//         this.savingsBalance = savingsBalance;
+//     }
+// }
+
+
+
+
+
+
+
+
+
+
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class FinancialProfile {
@@ -198,25 +245,13 @@ public class FinancialProfile {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private double savingsBalance;
+    private Double income;
+    private Double expenses;
+    private Integer creditScore;
 
-    // Add other fields as needed
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    // Getters and setters
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public double getSavingsBalance() {
-        return savingsBalance;
-    }
-
-    public void setSavingsBalance(double savingsBalance) {
-        this.savingsBalance = savingsBalance;
-    }
+    // getters and setters
 }
