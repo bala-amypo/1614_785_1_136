@@ -101,29 +101,79 @@
 
 
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+// import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.web.bind.annotation.GetMapping;
+// import org.springframework.web.bind.annotation.PathVariable;
+// import org.springframework.web.bind.annotation.PostMapping;
+// import org.springframework.web.bind.annotation.RequestMapping;
+// import org.springframework.web.bind.annotation.RestController;
+
+// @RestController
+// @RequestMapping("/api/eligibility")
+// public class EligibilityController {
+
+//     @Autowired
+//     private EligibilityService eligibilityService;
+
+//     @PostMapping("/evaluate/{requestId}")
+//     public EligibilityResult evaluateEligibility(
+//             @PathVariable Long requestId) {
+//         return eligibilityService.evaluateEligibility(requestId);
+//     }
+
+//     @GetMapping("/{requestId}")
+//     public EligibilityResult getEligibility(
+//             @PathVariable Long requestId) {
+//         return eligibilityService.getEligibilityByRequest(requestId);
+//     }
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// src/main/java/com/example/demo/controller/EligibilityController.java
+package com.example.demo.controller;
+
+import com.example.demo.entity.EligibilityResult;
+import com.example.demo.service.EligibilityService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/eligibility")
+@RequestMapping("/eligibility")
 public class EligibilityController {
 
-    @Autowired
-    private EligibilityService eligibilityService;
+    private final EligibilityService eligibilityService;
 
-    @PostMapping("/evaluate/{requestId}")
-    public EligibilityResult evaluateEligibility(
-            @PathVariable Long requestId) {
-        return eligibilityService.evaluateEligibility(requestId);
+    public EligibilityController(EligibilityService eligibilityService) {
+        this.eligibilityService = eligibilityService;
     }
 
-    @GetMapping("/{requestId}")
-    public EligibilityResult getEligibility(
-            @PathVariable Long requestId) {
-        return eligibilityService.getEligibilityByRequest(requestId);
+    @PostMapping("/{loanRequestId}")
+    public ResponseEntity<EligibilityResult> evaluate(@PathVariable Long loanRequestId) {
+        EligibilityResult result = eligibilityService.evaluateEligibility(loanRequestId);
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/{loanRequestId}")
+    public ResponseEntity<EligibilityResult> getByLoanRequest(@PathVariable Long loanRequestId) {
+        EligibilityResult result = eligibilityService.getByLoanRequestId(loanRequestId);
+        return ResponseEntity.ok(result);
     }
 }

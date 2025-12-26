@@ -52,30 +52,73 @@
 
 
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+// import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.web.bind.annotation.GetMapping;
+// import org.springframework.web.bind.annotation.PathVariable;
+// import org.springframework.web.bind.annotation.PostMapping;
+// import org.springframework.web.bind.annotation.RequestBody;
+// import org.springframework.web.bind.annotation.RequestMapping;
+// import org.springframework.web.bind.annotation.RestController;
+
+// @RestController
+// @RequestMapping("/api/financial-profiles")
+// public class FinancialProfileController {
+
+//     @Autowired
+//     private FinancialProfileService service;
+
+//     @PostMapping
+//     public FinancialProfile createOrUpdate(
+//             @RequestBody FinancialProfile profile) {
+//         return service.createOrUpdateProfile(profile);
+//     }
+
+//     @GetMapping("/user/{userId}")
+//     public FinancialProfile getByUser(
+//             @PathVariable Long userId) {
+//         return service.getProfileByUserId(userId);
+//     }
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+// src/main/java/com/example/demo/controller/FinancialProfileController.java
+package com.example.demo.controller;
+
+import com.example.demo.entity.FinancialProfile;
+import com.example.demo.service.FinancialProfileService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/financial-profiles")
+@RequestMapping("/financial-profiles")
 public class FinancialProfileController {
 
-    @Autowired
-    private FinancialProfileService service;
+    private final FinancialProfileService financialProfileService;
 
-    @PostMapping
-    public FinancialProfile createOrUpdate(
-            @RequestBody FinancialProfile profile) {
-        return service.createOrUpdateProfile(profile);
+    public FinancialProfileController(FinancialProfileService financialProfileService) {
+        this.financialProfileService = financialProfileService;
     }
 
-    @GetMapping("/user/{userId}")
-    public FinancialProfile getByUser(
-            @PathVariable Long userId) {
-        return service.getProfileByUserId(userId);
+    @PostMapping
+    public ResponseEntity<FinancialProfile> createOrUpdate(@RequestBody FinancialProfile profile) {
+        FinancialProfile saved = financialProfileService.createOrUpdate(profile);
+        return ResponseEntity.ok(saved);
+    }
+
+    @GetMapping("/{userId}")
+    public ResponseEntity<FinancialProfile> getByUserId(@PathVariable Long userId) {
+        FinancialProfile fp = financialProfileService.getByUserId(userId);
+        return ResponseEntity.ok(fp);
     }
 }
