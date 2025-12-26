@@ -136,4 +136,25 @@ public class AuthController {
         String token = jwtUtil.generateToken(claims, user.getEmail());
         return ResponseEntity.ok(new AuthResponse(token, user.getEmail()));
     }
+    // src/main/java/com/example/demo/controller/AuthController.java
+// ...
+
+@PostMapping("/login")
+public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest request) {
+    User user = userRepository.findByEmail(request.getEmail())
+            .orElseThrow(() -> new RuntimeException("Invalid credentials"));
+
+    if (!encoder.matches(request.getPassword(), user.getPassword())) {
+        throw new RuntimeException("Invalid credentials");
+    }
+
+    Map<String, Object> claims = new HashMap<>();
+    claims.put("email", user.getEmail());
+    claims.put("userId", user.getId());
+    claims.put("role", user.getRole());
+
+    String token = jwtUtil.generateToken(claims, user.getEmail());
+    return ResponseEntity.ok(new AuthResponse(token, user.getEmail()));
+}
+
 }

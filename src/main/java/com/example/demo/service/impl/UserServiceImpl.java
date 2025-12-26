@@ -359,4 +359,27 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
     }
+    @Override
+public User register(User user) {
+    if (userRepository == null) {
+        throw new NullPointerException("UserRepository is null");
+    }
+    // duplicate email check
+    if (user.getEmail() != null &&
+            userRepository.findByEmail(user.getEmail()).isPresent()) {
+        throw new BadRequestException("Email already used");
+    }
+
+    // encode password if present
+    if (user.getPassword() != null) {
+        user.setPassword(encoder.encode(user.getPassword()));
+    }
+
+    // default role CUSTOMER if not set
+    if (user.getRole() == null) {
+        user.setRole(User.Role.CUSTOMER.name());
+    }
+
+    return userRepository.save(user);
+}
 }
