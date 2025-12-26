@@ -56,13 +56,37 @@
 
 
 
+// import java.util.List;
+
+// public interface LoanRequestService {
+
+//     LoanRequest createLoanRequest(LoanRequest request);
+
+//     LoanRequest getLoanRequestById(Long id);
+
+//     List<LoanRequest> getLoanRequestsByUser(Long userId);
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+// src/main/java/com/example/demo/service/LoanRequestService.java
+package com.example.demo.service;
+
+import com.example.demo.entity.LoanRequest;
+
 import java.util.List;
 
 public interface LoanRequestService {
-
-    LoanRequest createLoanRequest(LoanRequest request);
-
-    LoanRequest getLoanRequestById(Long id);
-
-    List<LoanRequest> getLoanRequestsByUser(Long userId);
+    LoanRequest submitRequest(LoanRequest request);
+    LoanRequest getById(Long id);
+    List<LoanRequest> getRequestsByUser(Long userId);
 }

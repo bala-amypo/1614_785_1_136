@@ -67,11 +67,32 @@
 
 
 
-import java.util.List;
+// import java.util.List;
+
+// public interface RiskAssessmentService {
+
+//     RiskAssessment saveAssessment(RiskAssessment assessment);
+
+//     List<RiskAssessment> getAssessmentsByLoanRequest(Long loanRequestId);
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+// src/main/java/com/example/demo/service/RiskAssessmentService.java
+package com.example.demo.service;
+
+import com.example.demo.entity.RiskAssessment;
 
 public interface RiskAssessmentService {
-
-    RiskAssessment saveAssessment(RiskAssessment assessment);
-
-    List<RiskAssessment> getAssessmentsByLoanRequest(Long loanRequestId);
+    RiskAssessment assessRisk(Long loanRequestId);
+    RiskAssessment getByLoanRequestId(Long loanRequestId);
 }
