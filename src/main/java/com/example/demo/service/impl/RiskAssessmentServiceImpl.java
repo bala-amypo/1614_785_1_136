@@ -1,6 +1,6 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.entity.RiskAssessment;
+import com.example.demo.entity.RiskAssessmentLog;
 import com.example.demo.service.RiskAssessmentService;
 import org.springframework.stereotype.Service;
 
