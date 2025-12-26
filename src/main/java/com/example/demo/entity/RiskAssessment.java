@@ -343,6 +343,7 @@
 
 
 // src/main/java/com/example/demo/entity/RiskAssessment.java
+
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
