@@ -128,6 +128,96 @@
 
 
 
+// import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.stereotype.Service;
+
+// @Service
+// public class EligibilityServiceImpl implements EligibilityService {
+
+//     @Autowired
+//     private LoanRequestRepository loanRequestRepository;
+
+//     @Autowired
+//     private FinancialProfileRepository financialProfileRepository;
+
+//     @Autowired
+//     private EligibilityResultRepository eligibilityResultRepository;
+
+//     @Autowired
+//     private RiskAssessmentService riskAssessmentService;
+
+//     @Override
+//     public EligibilityResult evaluateEligibility(Long requestId) {
+
+//         LoanRequest loanRequest = loanRequestRepository.findById(requestId)
+//                 .orElseThrow(() -> new RuntimeException("Request not found"));
+
+//         FinancialProfile profile =
+//                 financialProfileRepository.findByUserId(
+//                         loanRequest.getUser().getId())
+//                 .orElseThrow(() -> new RuntimeException("Financial profile not found"));
+
+//         // DTI = Expenses / Income
+//         double dti = profile.getExpenses() / profile.getIncome();
+
+//         boolean eligible = dti < 0.4 && profile.getCreditScore() >= 650;
+//         String riskLevel;
+
+//         if (profile.getCreditScore() >= 750) {
+//             riskLevel = "LOW";
+//         } else if (profile.getCreditScore() >= 650) {
+//             riskLevel = "MEDIUM";
+//         } else {
+//             riskLevel = "HIGH";
+//         }
+
+//         EligibilityResult result = new EligibilityResult();
+//         result.setLoanRequest(loanRequest);
+//         result.setDti(dti);
+//         result.setEligible(eligible);
+//         result.setRiskLevel(riskLevel);
+
+//         EligibilityResult savedResult =
+//                 eligibilityResultRepository.save(result);
+
+//         // Save Risk Assessment
+//         RiskAssessment assessment = new RiskAssessment();
+//         assessment.setLoanRequest(loanRequest);
+//         assessment.setRiskLevel(riskLevel);
+//         assessment.setMessage("Eligibility evaluated with DTI = " + dti);
+
+//         riskAssessmentService.createAssessment(assessment);
+
+//         return savedResult;
+//     }
+
+//     @Override
+//     public EligibilityResult getEligibilityByRequest(Long requestId) {
+//         return eligibilityResultRepository.findByLoanRequestId(requestId)
+//                 .orElseThrow(() -> new RuntimeException("Eligibility result not found"));
+//     }
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+package com.example.demo.service.impl;
+
+import com.example.demo.entity.*;
+import com.example.demo.repository.*;
+import com.example.demo.service.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -149,51 +239,42 @@ public class EligibilityServiceImpl implements EligibilityService {
     @Override
     public EligibilityResult evaluateEligibility(Long requestId) {
 
-        LoanRequest loanRequest = loanRequestRepository.findById(requestId)
+        LoanRequest request = loanRequestRepository.findById(requestId)
                 .orElseThrow(() -> new RuntimeException("Request not found"));
 
-        FinancialProfile profile =
-                financialProfileRepository.findByUserId(
-                        loanRequest.getUser().getId())
-                .orElseThrow(() -> new RuntimeException("Financial profile not found"));
+        FinancialProfile profile = financialProfileRepository
+                .findByUserId(request.getUser().getId())
+                .orElseThrow(() -> new RuntimeException("Profile not found"));
 
-        // DTI = Expenses / Income
         double dti = profile.getExpenses() / profile.getIncome();
 
         boolean eligible = dti < 0.4 && profile.getCreditScore() >= 650;
-        String riskLevel;
 
-        if (profile.getCreditScore() >= 750) {
-            riskLevel = "LOW";
-        } else if (profile.getCreditScore() >= 650) {
-            riskLevel = "MEDIUM";
-        } else {
-            riskLevel = "HIGH";
-        }
+        String riskLevel =
+                profile.getCreditScore() >= 750 ? "LOW" :
+                profile.getCreditScore() >= 650 ? "MEDIUM" : "HIGH";
 
         EligibilityResult result = new EligibilityResult();
-        result.setLoanRequest(loanRequest);
+        result.setLoanRequest(request);
         result.setDti(dti);
         result.setEligible(eligible);
         result.setRiskLevel(riskLevel);
 
-        EligibilityResult savedResult =
-                eligibilityResultRepository.save(result);
+        EligibilityResult saved = eligibilityResultRepository.save(result);
 
-        // Save Risk Assessment
         RiskAssessment assessment = new RiskAssessment();
-        assessment.setLoanRequest(loanRequest);
+        assessment.setLoanRequest(request);
         assessment.setRiskLevel(riskLevel);
-        assessment.setMessage("Eligibility evaluated with DTI = " + dti);
+        assessment.setMessage("Eligibility evaluated");
 
         riskAssessmentService.createAssessment(assessment);
 
-        return savedResult;
+        return saved;
     }
 
     @Override
     public EligibilityResult getEligibilityByRequest(Long requestId) {
         return eligibilityResultRepository.findByLoanRequestId(requestId)
-                .orElseThrow(() -> new RuntimeException("Eligibility result not found"));
+                .orElseThrow(() -> new RuntimeException("Result not found"));
     }
 }

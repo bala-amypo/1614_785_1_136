@@ -51,3 +51,21 @@
 
 //     EligibilityResult getEligibilityByRequest(Long requestId);
 // }
+
+
+
+
+
+
+
+
+package com.example.demo.service;
+
+import com.example.demo.entity.EligibilityResult;
+
+public interface EligibilityService {
+
+    EligibilityResult evaluateEligibility(Long requestId);
+
+    EligibilityResult getEligibilityByRequest(Long requestId);
+}
