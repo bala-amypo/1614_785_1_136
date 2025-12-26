@@ -50,44 +50,104 @@
 
 
 
+// package com.example.demo.controller;
+
+// import java.util.List;
+// import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.web.bind.annotation.*;
+// import com.example.demo.entity.RiskAssessment;
+// import com.example.demo.service.RiskAssessmentService;
+// import jakarta.validation.Valid;
+
+// @RestController
+// @RequestMapping("/riskAssessment")
+// public class RiskAssessmentController {
+
+//     @Autowired  
+//     private RiskAssessmentService service;
+
+//     @PostMapping("/register")
+//     public RiskAssessment sendData(@RequestBody @Valid RiskAssessment riskAssessment) {
+//         return service.postData5(riskAssessment);
+//     }
+
+//     @GetMapping("/get")
+//     public List<RiskAssessment> getAll() {
+//         return service.getAllData5();
+//     }
+
+//     @DeleteMapping("/delete/{id}")
+//     public String delete(@PathVariable Long id) {
+//         return service.deleteData5(id);
+//     }
+
+//     @GetMapping("/find/{id}")
+//     public RiskAssessment find(@PathVariable Long id) {
+//         return service.getData5(id);
+//     }
+
+//     @PutMapping("/put/{id}")
+//     public RiskAssessment update(@PathVariable Long id, @RequestBody @Valid RiskAssessment entity) {
+//         return service.updateData5(id, entity);
+//     }
+// }
+
+
+
+
+
+
+
+
+
+
+
+// src/main/java/com/example/demo/controller/RiskAssessmentController.java
 package com.example.demo.controller;
 
-import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
 import com.example.demo.entity.RiskAssessment;
 import com.example.demo.service.RiskAssessmentService;
 import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
-@RequestMapping("/riskAssessment")
+@RequestMapping("/risk-assessments")
 public class RiskAssessmentController {
 
-    @Autowired  
-    private RiskAssessmentService service;
+    private final RiskAssessmentService service;
 
-    @PostMapping("/register")
-    public RiskAssessment sendData(@RequestBody @Valid RiskAssessment riskAssessment) {
-        return service.postData5(riskAssessment);
+    public RiskAssessmentController(RiskAssessmentService service) {
+        this.service = service;
     }
 
-    @GetMapping("/get")
-    public List<RiskAssessment> getAll() {
-        return service.getAllData5();
+    @PostMapping
+    public ResponseEntity<RiskAssessment> postData5(@Valid @RequestBody RiskAssessment riskAssessment) {
+        return ResponseEntity.ok(service.postData5(riskAssessment));
     }
 
-    @DeleteMapping("/delete/{id}")
-    public String delete(@PathVariable Long id) {
-        return service.deleteData5(id);
+    @GetMapping
+    public ResponseEntity<List<RiskAssessment>> getAllData5() {
+        return ResponseEntity.ok(service.getAllData5());
     }
 
-    @GetMapping("/find/{id}")
-    public RiskAssessment find(@PathVariable Long id) {
-        return service.getData5(id);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteData5(@PathVariable Long id) {
+        service.deleteData5(id);
+        return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/put/{id}")
-    public RiskAssessment update(@PathVariable Long id, @RequestBody @Valid RiskAssessment entity) {
-        return service.updateData5(id, entity);
+    @GetMapping("/{id}")
+    public ResponseEntity<RiskAssessment> getData5(@PathVariable Long id) {
+        return ResponseEntity.ok(service.getData5(id));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<RiskAssessment> updateData5(
+            @PathVariable Long id,
+            @Valid @RequestBody RiskAssessment riskAssessment) {
+        return ResponseEntity.ok(service.updateData5(id, riskAssessment));
     }
 }
