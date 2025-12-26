@@ -1,14 +1,14 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.entity.RiskAssessmentLog;
-import com.example.demo.service.RiskAssessmentService;
+import com.example.demo.service.RiskAssessmentLogService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class RiskAssessmentServiceImpl implements RiskAssessmentService {
+public class RiskAssessmentLogServiceImpl implements RiskAssessmentLogService {
 
     // Temporary in-memory storage (replace with repository if you have one)
     private final List<RiskAssessmentLog> store = new ArrayList<>();
