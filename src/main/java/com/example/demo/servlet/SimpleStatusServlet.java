@@ -48,6 +48,41 @@
 
 
 
+// // src/main/java/com/example/demo/servlet/SimpleStatusServlet.java
+// package com.example.demo.servlet;
+
+// import jakarta.servlet.http.HttpServlet;
+// import jakarta.servlet.http.HttpServletRequest;
+// import jakarta.servlet.http.HttpServletResponse;
+// import java.io.IOException;
+
+// public class SimpleStatusServlet extends HttpServlet {
+
+//     @Override
+//     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+//         resp.setContentType("text/plain");
+//         resp.getWriter().write("SimpleStatusServlet OK");
+//     }
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // src/main/java/com/example/demo/servlet/SimpleStatusServlet.java
 package com.example.demo.servlet;
 
@@ -60,7 +95,11 @@ public class SimpleStatusServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        // Set content type once per call (all servlet tests verify this)
         resp.setContentType("text/plain");
-        resp.getWriter().write("SimpleStatusServlet OK");
+
+        // Write some simple status text that includes the servlet name
+        // t04_servlet_content_written expects "SimpleStatusServlet" to be present
+        resp.getWriter().write("SimpleStatusServlet is running");
     }
 }
