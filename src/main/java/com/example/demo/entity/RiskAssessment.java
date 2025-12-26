@@ -291,38 +291,91 @@
 
 
 
+// package com.example.demo.entity;
+
+// import jakarta.persistence.*;
+// import java.time.LocalDateTime;
+
+// @Entity
+// public class RiskAssessment {
+
+//     @Id
+//     @GeneratedValue(strategy = GenerationType.IDENTITY)
+//     private Long id;
+
+//     private String riskLevel;
+//     private String message;
+//     private LocalDateTime timestamp;
+
+//     @ManyToOne
+//     private Request request;
+
+//     public void setRiskLevel(String riskLevel) {
+//         this.riskLevel = riskLevel;
+//     }
+
+//     public void setMessage(String message) {
+//         this.message = message;
+//     }
+
+//     public void setTimestamp(LocalDateTime timestamp) {
+//         this.timestamp = timestamp;
+//     }
+
+//     public void setRequest(Request request) {
+//         this.request = request;
+//     }
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// src/main/java/com/example/demo/entity/RiskAssessment.java
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "risk_assessments")
 public class RiskAssessment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String riskLevel;
-    private String message;
-    private LocalDateTime timestamp;
+    @OneToOne
+    @JoinColumn(name = "loan_request_id")
+    private LoanRequest loanRequest;
 
-    @ManyToOne
-    private Request request;
+    private Double riskScore;
+    private Double dtiRatio;
 
-    public void setRiskLevel(String riskLevel) {
-        this.riskLevel = riskLevel;
-    }
+    // getters and setters
+    public Long getId() { return id; }
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
+    public void setId(Long id) { this.id = id; }
 
-    public void setTimestamp(LocalDateTime timestamp) {
-        this.timestamp = timestamp;
-    }
+    public LoanRequest getLoanRequest() { return loanRequest; }
 
-    public void setRequest(Request request) {
-        this.request = request;
-    }
+    public void setLoanRequest(LoanRequest loanRequest) { this.loanRequest = loanRequest; }
+
+    public Double getRiskScore() { return riskScore; }
+
+    public void setRiskScore(Double riskScore) { this.riskScore = riskScore; }
+
+    public Double getDtiRatio() { return dtiRatio; }
+
+    public void setDtiRatio(Double dtiRatio) { this.dtiRatio = dtiRatio; }
 }

@@ -271,53 +271,135 @@
 
 
 
+// package com.example.demo.entity;
+
+// import jakarta.persistence.*;
+
+// @Entity
+// public class FinancialProfile {
+
+//     @Id
+//     @GeneratedValue(strategy = GenerationType.IDENTITY)
+//     private Long id;
+
+//     private double income;
+//     private double expenses;
+//     private int creditScore;
+
+//     @OneToOne
+//     private User user;
+
+//     public double getIncome() {
+//         return income;
+//     }
+
+//     public double getExpenses() {
+//         return expenses;
+//     }
+
+//     public int getCreditScore() {
+//         return creditScore;
+//     }
+
+//     public User getUser() {
+//         return user;
+//     }
+
+//     public void setIncome(double income) {
+//         this.income = income;
+//     }
+
+//     public void setExpenses(double expenses) {
+//         this.expenses = expenses;
+//     }
+
+//     public void setCreditScore(int creditScore) {
+//         this.creditScore = creditScore;
+//     }
+
+//     public void setUser(User user) {
+//         this.user = user;
+//     }
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// src/main/java/com/example/demo/entity/FinancialProfile.java
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
+import java.time.Instant;
 
 @Entity
+@Table(name = "financial_profiles",
+       uniqueConstraints = @UniqueConstraint(columnNames = "user_id"))
 public class FinancialProfile {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private double income;
-    private double expenses;
-    private int creditScore;
-
     @OneToOne
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    public double getIncome() {
-        return income;
+    private Double monthlyIncome;
+    private Double monthlyExpenses;
+    private Double existingLoanEmi;
+    private Integer creditScore;
+    private Double savingsBalance;
+
+    private Instant lastUpdatedAt;
+
+    @PrePersist
+    @PreUpdate
+    public void prePersist() {
+        lastUpdatedAt = Instant.now();
     }
 
-    public double getExpenses() {
-        return expenses;
-    }
+    // getters and setters
+    public Long getId() { return id; }
 
-    public int getCreditScore() {
-        return creditScore;
-    }
+    public void setId(Long id) { this.id = id; }
 
-    public User getUser() {
-        return user;
-    }
+    public User getUser() { return user; }
 
-    public void setIncome(double income) {
-        this.income = income;
-    }
+    public void setUser(User user) { this.user = user; }
 
-    public void setExpenses(double expenses) {
-        this.expenses = expenses;
-    }
+    public Double getMonthlyIncome() { return monthlyIncome; }
 
-    public void setCreditScore(int creditScore) {
-        this.creditScore = creditScore;
-    }
+    public void setMonthlyIncome(Double monthlyIncome) { this.monthlyIncome = monthlyIncome; }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
+    public Double getMonthlyExpenses() { return monthlyExpenses; }
+
+    public void setMonthlyExpenses(Double monthlyExpenses) { this.monthlyExpenses = monthlyExpenses; }
+
+    public Double getExistingLoanEmi() { return existingLoanEmi; }
+
+    public void setExistingLoanEmi(Double existingLoanEmi) { this.existingLoanEmi = existingLoanEmi; }
+
+    public Integer getCreditScore() { return creditScore; }
+
+    public void setCreditScore(Integer creditScore) { this.creditScore = creditScore; }
+
+    public Double getSavingsBalance() { return savingsBalance; }
+
+    public void setSavingsBalance(Double savingsBalance) { this.savingsBalance = savingsBalance; }
+
+    public Instant getLastUpdatedAt() { return lastUpdatedAt; }
+
+    public void setLastUpdatedAt(Instant lastUpdatedAt) { this.lastUpdatedAt = lastUpdatedAt; }
 }

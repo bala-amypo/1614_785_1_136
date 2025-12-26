@@ -315,43 +315,127 @@
 
 
 
+// package com.example.demo.entity;
+
+// import jakarta.persistence.*;
+
+// @Entity
+// public class LoanRequest {
+
+//     @Id
+//     @GeneratedValue(strategy = GenerationType.IDENTITY)
+//     private Long id;
+
+//     private String status;
+
+//     @ManyToOne
+//     private User user;
+
+//     public Long getId() {
+//         return id;
+//     }
+
+//     public String getStatus() {
+//         return status;
+//     }
+
+//     public User getUser() {
+//         return user;
+//     }
+
+//     public void setId(Long id) {
+//         this.id = id;
+//     }
+
+//     public void setStatus(String status) {
+//         this.status = status;
+//     }
+
+//     public void setUser(User user) {
+//         this.user = user;
+//     }
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// src/main/java/com/example/demo/entity/LoanRequest.java
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
+import java.time.Instant;
 
 @Entity
+@Table(name = "loan_requests")
 public class LoanRequest {
+
+    public enum Status { PENDING, APPROVED, REJECTED }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String status;
+    private Double requestedAmount;
+    private Integer tenureMonths;
 
     @ManyToOne
+    @JoinColumn(name = "user_id")
     private User user;
 
-    public Long getId() {
-        return id;
+    private String status;
+
+    private Instant submittedAt;
+
+    @PrePersist
+    public void prePersist() {
+        if (status == null) {
+            status = Status.PENDING.name();
+        }
+        if (submittedAt == null) {
+            submittedAt = Instant.now();
+        }
     }
 
-    public String getStatus() {
-        return status;
-    }
+    // getters and setters
+    public Long getId() { return id; }
 
-    public User getUser() {
-        return user;
-    }
+    public void setId(Long id) { this.id = id; }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public Double getRequestedAmount() { return requestedAmount; }
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
+    public void setRequestedAmount(Double requestedAmount) { this.requestedAmount = requestedAmount; }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
+    public Integer getTenureMonths() { return tenureMonths; }
+
+    public void setTenureMonths(Integer tenureMonths) { this.tenureMonths = tenureMonths; }
+
+    public User getUser() { return user; }
+
+    public void setUser(User user) { this.user = user; }
+
+    public String getStatus() { return status; }
+
+    public void setStatus(String status) { this.status = status; }
+
+    public Instant getSubmittedAt() { return submittedAt; }
+
+    public void setSubmittedAt(Instant submittedAt) { this.submittedAt = submittedAt; }
 }

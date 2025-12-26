@@ -182,37 +182,80 @@
 
 
 
+// package com.example.demo.entity;
+
+// import jakarta.persistence.*;
+
+// @Entity
+// public class EligibilityResult {
+
+//     @Id
+//     @GeneratedValue(strategy = GenerationType.IDENTITY)
+//     private Long id;
+
+//     private double dti;
+//     private boolean eligible;
+//     private String riskLevel;
+
+//     @OneToOne
+//     private Request request;
+
+//     public void setDti(double dti) {
+//         this.dti = dti;
+//     }
+
+//     public void setEligible(boolean eligible) {
+//         this.eligible = eligible;
+//     }
+
+//     public void setRiskLevel(String riskLevel) {
+//         this.riskLevel = riskLevel;
+//     }
+
+//     public void setRequest(Request request) {
+//         this.request = request;
+//     }
+// }
+
+
+
+
+
+
+
+
+
+
+
+// src/main/java/com/example/demo/entity/EligibilityResult.java
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "eligibility_results")
 public class EligibilityResult {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private double dti;
-    private boolean eligible;
-    private String riskLevel;
-
     @OneToOne
-    private Request request;
+    @JoinColumn(name = "loan_request_id")
+    private LoanRequest loanRequest;
 
-    public void setDti(double dti) {
-        this.dti = dti;
-    }
+    private Double maxEligibleAmount;
 
-    public void setEligible(boolean eligible) {
-        this.eligible = eligible;
-    }
+    // getters and setters
+    public Long getId() { return id; }
 
-    public void setRiskLevel(String riskLevel) {
-        this.riskLevel = riskLevel;
-    }
+    public void setId(Long id) { this.id = id; }
 
-    public void setRequest(Request request) {
-        this.request = request;
-    }
+    public LoanRequest getLoanRequest() { return loanRequest; }
+
+    public void setLoanRequest(LoanRequest loanRequest) { this.loanRequest = loanRequest; }
+
+    public Double getMaxEligibleAmount() { return maxEligibleAmount; }
+
+    public void setMaxEligibleAmount(Double maxEligibleAmount) { this.maxEligibleAmount = maxEligibleAmount; }
 }
