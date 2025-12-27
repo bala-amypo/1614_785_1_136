@@ -363,12 +363,6 @@
 
 
 
-
-
-
-
-
-
 package com.example.demo.security;
 
 import io.jsonwebtoken.Claims;
@@ -384,7 +378,7 @@ import java.util.function.Function;
 
 public class JwtUtil {
 
-    // Base64-encoded secret (example only; move to config)
+    // Example secret (use a proper 256-bit Base64-encoded secret in real app)
     private static final String SECRET = "your-256-bit-secret-your-256-bit-secret";
 
     private SecretKey getSigningKey() {
@@ -392,28 +386,29 @@ public class JwtUtil {
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
-    // ===== Generate token =====
+    // Generate token with username and additional claims
     public String generateToken(String username, Map<String, Object> additionalClaims) {
 
         SecretKey key = getSigningKey();
 
-        // NEW style: claims(Map) -> claims().add(...)
         return Jwts.builder()
-                .subject(username)                            // set subject
-                .claims()                                     // start claims builder
-                .add(additionalClaims)                        // add your custom claims
-                .and()                                        // back to main builder
+                .claims(additionalClaims)                         // custom claims
+                .subject(username)                                // subject
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60)) // 1 hour
-                .signWith(key, Jwts.SIG.HS256)                // NEW style: Jwts.SIG.HS256
+                .signWith(key)                                    // algorithm inferred from key
                 .compact();
     }
 
-    // ===== Extract claims =====
-    private Claims extractAllClaims(String token) {
+    // Overload if you only need username
+    public String generateToken(String username) {
+        return generateToken(username, Map.of());
+    }
+
+    // Extract all claims
+    public Claims extractAllClaims(String token) {
         SecretKey key = getSigningKey();
 
-        // NEW style: use parserBuilder() and verifyWith(key)
         Jws<Claims> jws = Jwts.parser()
                 .verifyWith(key)
                 .build()
@@ -422,6 +417,7 @@ public class JwtUtil {
         return jws.getPayload();
     }
 
+    // Helper used by filter/tests
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
         Claims claims = extractAllClaims(token);
         return claimsResolver.apply(claims);
@@ -431,14 +427,13 @@ public class JwtUtil {
         return extractClaim(token, Claims::getSubject);
     }
 
-    // ===== Validate token =====
+    public boolean isTokenExpired(String token) {
+        Date expiration = extractClaim(token, Claims::getExpiration);
+        return expiration.before(new Date());
+    }
+
     public boolean isTokenValid(String token, String expectedUsername) {
         String username = extractUsername(token);
         return username.equals(expectedUsername) && !isTokenExpired(token);
-    }
-
-    private boolean isTokenExpired(String token) {
-        Date expiration = extractClaim(token, Claims::getExpiration);
-        return expiration.before(new Date());
     }
 }
