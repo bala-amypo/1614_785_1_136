@@ -361,73 +361,129 @@
 
 
 
+
+
+// package com.example.demo.security;
+
+// import io.jsonwebtoken.Claims;
+// import io.jsonwebtoken.Jws;
+// import io.jsonwebtoken.Jwts;
+// import io.jsonwebtoken.io.Decoders;
+// import io.jsonwebtoken.security.Keys;
+
+// import javax.crypto.SecretKey;
+// import java.util.Date;
+// import java.util.Map;
+// import java.util.function.Function;
+
+// public class JwtUtil {
+
+//     // Example secret (use a proper 256-bit Base64-encoded secret in real app)
+//     private static final String SECRET = "your-256-bit-secret-your-256-bit-secret";
+
+//     private SecretKey getSigningKey() {
+//         byte[] keyBytes = Decoders.BASE64.decode(SECRET);
+//         return Keys.hmacShaKeyFor(keyBytes);
+//     }
+
+//     // Generate token with username and additional claims
+//     public String generateToken(String username, Map<String, Object> additionalClaims) {
+
+//         SecretKey key = getSigningKey();
+
+//         return Jwts.builder()
+//                 .claims(additionalClaims)                         // custom claims
+//                 .subject(username)                                // subject
+//                 .issuedAt(new Date(System.currentTimeMillis()))
+//                 .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60)) // 1 hour
+//                 .signWith(key)                                    // algorithm inferred from key
+//                 .compact();
+//     }
+
+//     // Overload if you only need username
+//     public String generateToken(String username) {
+//         return generateToken(username, Map.of());
+//     }
+
+//     // Extract all claims
+//     public Claims extractAllClaims(String token) {
+//         SecretKey key = getSigningKey();
+
+//         Jws<Claims> jws = Jwts.parser()
+//                 .verifyWith(key)
+//                 .build()
+//                 .parseSignedClaims(token);
+
+//         return jws.getPayload();
+//     }
+
+//     // Helper used by filter/tests
+//     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
+//         Claims claims = extractAllClaims(token);
+//         return claimsResolver.apply(claims);
+//     }
+
+//     public String extractUsername(String token) {
+//         return extractClaim(token, Claims::getSubject);
+//     }
+
+//     public boolean isTokenExpired(String token) {
+//         Date expiration = extractClaim(token, Claims::getExpiration);
+//         return expiration.before(new Date());
+//     }
+
+//     public boolean isTokenValid(String token, String expectedUsername) {
+//         String username = extractUsername(token);
+//         return username.equals(expectedUsername) && !isTokenExpired(token);
+//     }
+// }
+
+
+
+
+
+
+
+
+
+
+// src/main/java/com/example/demo/security/JwtUtil.java
 package com.example.demo.security;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
+import io.jsonwebtoken.security.Keys;
 
-import javax.crypto.spec.SecretKeySpec;
 import java.security.Key;
-import java.util.Base64;
 import java.util.Date;
 import java.util.Map;
-import java.util.function.Function;
 
 public class JwtUtil {
 
-    // Use the same secret the tests expect; example:
-    private static final String SECRET = "your-256-bit-secret-your-256-bit-secret";
+    private final Key key;
+    private final long validityInMs;
 
-    private Key getSigningKey() {
-        byte[] keyBytes = Base64.getDecoder().decode(SECRET);
-        return new SecretKeySpec(keyBytes, SignatureAlgorithm.HS256.getJcaName());
+    public JwtUtil(String secret, long validityInMs) {
+        this.key = Keys.hmacShaKeyFor(secret.getBytes());
+        this.validityInMs = validityInMs;
     }
 
-    // ===== Generate token =====
-    public String generateToken(String username, Map<String, Object> additionalClaims) {
-
-        long now = System.currentTimeMillis();
-        long expiry = now + 1000 * 60 * 60; // 1 hour
-
+    public String generateToken(Map<String, Object> claims, String subject) {
+        Date now = new Date();
+        Date exp = new Date(now.getTime() + validityInMs);
         return Jwts.builder()
-                .setClaims(additionalClaims)                // all custom claims
-                .setSubject(username)
-                .setIssuedAt(new Date(now))
-                .setExpiration(new Date(expiry))
-                .signWith(SignatureAlgorithm.HS256, getSigningKey())
+                .setClaims(claims)
+                .setSubject(subject)
+                .setIssuedAt(now)
+                .setExpiration(exp)
+                .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
     }
 
-    // Overload if only username is needed
-    public String generateToken(String username) {
-        return generateToken(username, java.util.Collections.emptyMap());
-    }
-
-    // ===== Extract claims =====
-    public Claims extractAllClaims(String token) {
-        return Jwts.parser()
-                .setSigningKey(getSigningKey())
+    public Claims getAllClaims(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
                 .parseClaimsJws(token)
                 .getBody();
-    }
-
-    public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
-        Claims claims = extractAllClaims(token);
-        return claimsResolver.apply(claims);
-    }
-
-    public String extractUsername(String token) {
-        return extractClaim(token, Claims::getSubject);
-    }
-
-    public boolean isTokenExpired(String token) {
-        Date expiration = extractClaim(token, Claims::getExpiration);
-        return expiration.before(new Date());
-    }
-
-    public boolean isTokenValid(String token, String expectedUsername) {
-        String username = extractUsername(token);
-        return username.equals(expectedUsername) && !isTokenExpired(token);
     }
 }
