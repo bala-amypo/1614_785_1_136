@@ -25,6 +25,22 @@
 
     <dependencies>
 
+
+
+<dependency>
+    <groupId>org.testng</groupId>
+    <artifactId>testng</artifactId>
+    <version>7.9.0</version>   <!-- or any recent stable version -->
+    <scope>test</scope>
+</dependency>
+
+
+
+
+
+
+
+
         <!-- ===================== WEB ===================== -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
