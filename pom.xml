@@ -62,12 +62,10 @@
 
 
 <dependency>
-    <groupId>mysql</groupId>
+    <groupId>com.mysql</groupId>
     <artifactId>mysql-connector-j</artifactId>
-    <version>8.4.0</version> <!-- or any recent 8.x compatible version -->
+    <scope>runtime</scope>
 </dependency>
-
-
 
 
 
