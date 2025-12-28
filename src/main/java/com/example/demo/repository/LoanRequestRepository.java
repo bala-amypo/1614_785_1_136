@@ -127,14 +127,41 @@
 
 
 
-// src/main/java/com/example/demo/repository/LoanRequestRepository.java
+// // src/main/java/com/example/demo/repository/LoanRequestRepository.java
+// package com.example.demo.repository;
+
+// import com.example.demo.entity.LoanRequest;
+// import org.springframework.data.jpa.repository.JpaRepository;
+
+// import java.util.List;
+
+// public interface LoanRequestRepository extends JpaRepository<LoanRequest, Long> {
+//     List<LoanRequest> findByUserId(Long userId);
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 package com.example.demo.repository;
 
 import com.example.demo.entity.LoanRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository   // ✅ ADDED (do not remove anything else)
 public interface LoanRequestRepository extends JpaRepository<LoanRequest, Long> {
+
     List<LoanRequest> findByUserId(Long userId);
 }
